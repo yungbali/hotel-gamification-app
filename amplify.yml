@@ -1,0 +1,21 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm install
+        - npm install -g @expo/cli
+    build:
+      commands:
+        - npx expo export --platform web
+    postBuild:
+      commands:
+        - echo "Build completed"
+  artifacts:
+    baseDirectory: dist
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+      - .expo/**/*

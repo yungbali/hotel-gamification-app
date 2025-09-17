@@ -20,8 +20,8 @@ export class QRCodeService {
     try {
       const token = this.generateUniqueToken();
       // Use environment-based URL
-      const baseUrl = process.env.NODE_ENV === 'production' 
-        ? 'https://main.d256olrwmf8tqn.amplifyapp.com' // Your actual Amplify URL
+      const baseUrl = process.env.NODE_ENV === 'production'
+        ? 'https://hotel-gamification-2n5aum6rc-yungbalis-projects.vercel.app' // Vercel feedback server
         : 'http://localhost:3001';
       const url = `${baseUrl}/feedback/${token}`;
 

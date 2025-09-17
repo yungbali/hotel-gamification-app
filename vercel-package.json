@@ -1,0 +1,16 @@
+{
+  "name": "hotel-gamification-feedback-server",
+  "version": "1.0.0",
+  "description": "Feedback server for hotel gamification app",
+  "main": "feedback-server.js",
+  "scripts": {
+    "start": "node feedback-server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "cors": "^2.8.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -21,7 +21,7 @@ export class QRCodeService {
       const token = this.generateUniqueToken();
       // Use environment-based URL
       const baseUrl = process.env.NODE_ENV === 'production'
-        ? 'https://hotel-gamification-2n5aum6rc-yungbalis-projects.vercel.app' // Vercel feedback server
+        ? 'https://yungbali.github.io/hotel-gamification-app' // GitHub Pages
         : 'http://localhost:3001';
       const url = `${baseUrl}/feedback/${token}`;
 

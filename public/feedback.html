@@ -3,516 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rate Your Service - Grand Hotel</title>
+    <title>Hotel Feedback</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
         }
-
         .container {
             background: white;
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 500px;
-            width: 100%;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            text-align: center;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
-
-        .logo {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-
         h1 {
-            color: #2196F3;
-            margin-bottom: 10px;
-            font-size: 1.8rem;
-        }
-
-        .subtitle {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 1rem;
-        }
-
-        .rating-section {
+            color: #333;
+            text-align: center;
             margin-bottom: 30px;
         }
-
-        .rating-title {
-            font-size: 1.2rem;
+        .form-group {
             margin-bottom: 20px;
-            color: #333;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
             font-weight: 600;
+            color: #555;
         }
-
-        .stars {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 30px;
-        }
-
-        .star {
-            font-size: 3rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            color: #ddd;
-            user-select: none;
-        }
-
-        .star:hover,
-        .star.active {
-            color: #FFD700;
-            transform: scale(1.1);
-        }
-
-        .star.active {
-            animation: bounce 0.5s ease;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 60%, 100% { transform: translateY(0) scale(1.1); }
-            40% { transform: translateY(-10px) scale(1.1); }
-            80% { transform: translateY(-5px) scale(1.1); }
-        }
-
-        .rating-labels {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.8rem;
-            color: #666;
-            margin-bottom: 30px;
-        }
-
-        .comment-section {
-            margin-bottom: 30px;
-            text-align: left;
-        }
-
-        .comment-label {
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .comment-input {
+        input, select, textarea {
             width: 100%;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1rem;
-            resize: vertical;
-            min-height: 100px;
-            font-family: inherit;
-            transition: border-color 0.3s ease;
-        }
-
-        .comment-input:focus {
-            outline: none;
-            border-color: #2196F3;
-        }
-
-        .info-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .info-input {
             padding: 12px;
-            border: 2px solid #e0e0e0;
+            border: 2px solid #e1e5e9;
             border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
+            font-size: 16px;
+            transition: border-color 0.3s;
         }
-
-        .info-input:focus {
+        input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: #2196F3;
+            border-color: #667eea;
         }
-
-        .submit-btn {
-            background: linear-gradient(135deg, #2196F3 0%, #21CBF3 100%);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(33, 150, 243, 0.3);
-        }
-
-        .submit-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .privacy-text {
-            font-size: 0.8rem;
-            color: #999;
-            line-height: 1.4;
-        }
-
-        .loading {
-            display: none;
+        .rating {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
             margin: 20px 0;
         }
-
-        .loading.show {
-            display: block;
+        .star {
+            font-size: 30px;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.2s;
         }
-
-        .success-message {
+        .star:hover,
+        .star.active {
+            color: #ffd700;
+        }
+        button {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .success {
             background: #4CAF50;
             color: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
             display: none;
         }
-
-        .success-message.show {
-            display: block;
-        }
-
-        .error-message {
+        .error {
             background: #f44336;
             color: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            display: none;
-        }
-
-        .error-message.show {
-            display: block;
-        }
-
-        .manager-contact {
-            background: #FFF3E0;
-            border: 1px solid #FFB74D;
-            border-radius: 10px;
             padding: 15px;
-            margin-bottom: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
             display: none;
         }
-
-        .manager-contact.show {
-            display: block;
-        }
-
-        .manager-contact h3 {
-            color: #FF9800;
-            margin-bottom: 5px;
-            font-size: 1rem;
-        }
-
-        .manager-contact p {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 30px 20px;
-            }
-            
-            .stars {
-                gap: 5px;
-            }
-            
-            .star {
-                font-size: 2.5rem;
-            }
-            
-            .info-section {
-                grid-template-columns: 1fr;
-            }
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="logo">🏨</div>
-        <h1>Rate Your Service</h1>
-        <p class="subtitle">Help us improve by sharing your dining experience</p>
-
-        <div class="success-message" id="successMessage">
-            <h3>Thank you for your feedback! 🎉</h3>
-            <p>Your rating has been submitted successfully. We appreciate your input and will use it to improve our service.</p>
-        </div>
-
-        <div class="error-message" id="errorMessage">
-            <h3>Oops! Something went wrong 😔</h3>
-            <p>Please try again or contact our staff for assistance.</p>
-        </div>
-
+        <h1>🏨 Hotel Service Feedback</h1>
+        <p style="text-align: center; color: #666; margin-bottom: 30px;">
+            Thank you for dining with us! Please share your experience.
+        </p>
+        
         <form id="feedbackForm">
-            <div class="rating-section">
-                <div class="rating-title">How was your service?</div>
-                <div class="stars" id="starRating">
-                    <span class="star" data-rating="1">⭐</span>
-                    <span class="star" data-rating="2">⭐</span>
-                    <span class="star" data-rating="3">⭐</span>
-                    <span class="star" data-rating="4">⭐</span>
-                    <span class="star" data-rating="5">⭐</span>
+            <div class="form-group">
+                <label for="waiterName">Waiter Name</label>
+                <input type="text" id="waiterName" name="waiterName" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="serviceRating">Service Rating</label>
+                <div class="rating" id="serviceRating">
+                    <span class="star" data-rating="1">★</span>
+                    <span class="star" data-rating="2">★</span>
+                    <span class="star" data-rating="3">★</span>
+                    <span class="star" data-rating="4">★</span>
+                    <span class="star" data-rating="5">★</span>
                 </div>
-                <div class="rating-labels">
-                    <span>Poor</span>
-                    <span>Fair</span>
-                    <span>Good</span>
-                    <span>Very Good</span>
-                    <span>Excellent</span>
+                <input type="hidden" id="serviceRatingValue" name="serviceRating" value="0">
+            </div>
+            
+            <div class="form-group">
+                <label for="foodRating">Food Quality Rating</label>
+                <div class="rating" id="foodRating">
+                    <span class="star" data-rating="1">★</span>
+                    <span class="star" data-rating="2">★</span>
+                    <span class="star" data-rating="3">★</span>
+                    <span class="star" data-rating="4">★</span>
+                    <span class="star" data-rating="5">★</span>
                 </div>
+                <input type="hidden" id="foodRatingValue" name="foodRating" value="0">
             </div>
-
-            <div class="manager-contact" id="managerContact">
-                <h3>⚠️ We'd like to make this right</h3>
-                <p>A manager will be notified about your experience. Please provide your details so we can follow up with you personally.</p>
+            
+            <div class="form-group">
+                <label for="ambianceRating">Ambiance Rating</label>
+                <div class="rating" id="ambianceRating">
+                    <span class="star" data-rating="1">★</span>
+                    <span class="star" data-rating="2">★</span>
+                    <span class="star" data-rating="3">★</span>
+                    <span class="star" data-rating="4">★</span>
+                    <span class="star" data-rating="5">★</span>
+                </div>
+                <input type="hidden" id="ambianceRatingValue" name="ambianceRating" value="0">
             </div>
-
-            <div class="comment-section">
-                <div class="comment-label">Tell us more (optional)</div>
-                <textarea 
-                    class="comment-input" 
-                    id="comment"
-                    placeholder="Share any specific details about your experience..."
-                    maxlength="500"
-                ></textarea>
+            
+            <div class="form-group">
+                <label for="comments">Additional Comments</label>
+                <textarea id="comments" name="comments" rows="4" placeholder="Tell us about your experience..."></textarea>
             </div>
-
-            <div class="info-section">
-                <input 
-                    type="text" 
-                    class="info-input" 
-                    id="tableNumber"
-                    placeholder="Table Number (optional)"
-                    maxlength="20"
-                >
-                <input 
-                    type="text" 
-                    class="info-input" 
-                    id="lastName"
-                    placeholder="Last Name (optional)"
-                    maxlength="50"
-                >
-            </div>
-
-            <button type="submit" class="submit-btn" id="submitBtn" disabled>
-                Submit Feedback
-            </button>
-
-            <div class="loading" id="loading">
-                <p>Submitting your feedback...</p>
-            </div>
-
-            <p class="privacy-text">
-                Your feedback is anonymous and will help improve our service quality. 
-                We respect your privacy and will only use this information to enhance your experience.
-            </p>
+            
+            <button type="submit" id="submitBtn">Submit Feedback</button>
         </form>
+        
+        <div class="success" id="successMessage">
+            ✅ Thank you for your feedback! Your waiter will be notified.
+        </div>
+        
+        <div class="error" id="errorMessage">
+            ❌ There was an error submitting your feedback. Please try again.
+        </div>
+        
+        <div class="loading" id="loadingMessage">
+            ⏳ Submitting feedback...
+        </div>
     </div>
 
     <script>
-        class FeedbackForm {
-            constructor() {
-                this.selectedRating = 0;
-                this.token = this.getTokenFromURL();
-                this.initializeEventListeners();
-                this.validateToken();
-            }
-
-            getTokenFromURL() {
-                const path = window.location.pathname;
-                const parts = path.split('/');
-                return parts[parts.length - 1];
-            }
-
-            initializeEventListeners() {
-                // Star rating
-                const stars = document.querySelectorAll('.star');
-                stars.forEach(star => {
-                    star.addEventListener('click', (e) => {
-                        this.setRating(parseInt(e.target.dataset.rating));
-                    });
-
-                    star.addEventListener('mouseover', (e) => {
-                        this.highlightStars(parseInt(e.target.dataset.rating));
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token') || 'demo-token';
+        
+        // Set waiter name from URL if provided
+        const waiterName = urlParams.get('waiter') || '';
+        if (waiterName) {
+            document.getElementById('waiterName').value = waiterName;
+        }
+        
+        // Star rating functionality
+        function setupRating(ratingId, valueId) {
+            const stars = document.querySelectorAll(`#${ratingId} .star`);
+            const valueInput = document.getElementById(valueId);
+            
+            stars.forEach((star, index) => {
+                star.addEventListener('click', () => {
+                    const rating = index + 1;
+                    valueInput.value = rating;
+                    
+                    stars.forEach((s, i) => {
+                        s.classList.toggle('active', i < rating);
                     });
                 });
-
-                document.getElementById('starRating').addEventListener('mouseleave', () => {
-                    this.highlightStars(this.selectedRating);
-                });
-
-                // Form submission
-                document.getElementById('feedbackForm').addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    this.submitFeedback();
-                });
-            }
-
-            async validateToken() {
-                // In a real app, this would validate the token with the backend
-                // For demo, we'll just check if it exists
-                if (!this.token || this.token === 'feedback.html') {
-                    this.showError('Invalid feedback link. Please scan the QR code provided by your waiter.');
-                    return;
-                }
                 
-                // Mock validation - in real app, check if token is valid and not expired
-                console.log('Validating token:', this.token);
-            }
-
-            setRating(rating) {
-                this.selectedRating = rating;
-                this.highlightStars(rating);
-                this.updateSubmitButton();
-                this.toggleManagerContact(rating <= 3);
-            }
-
-            highlightStars(rating) {
-                const stars = document.querySelectorAll('.star');
-                stars.forEach((star, index) => {
-                    star.classList.toggle('active', index < rating);
+                star.addEventListener('mouseenter', () => {
+                    const rating = index + 1;
+                    stars.forEach((s, i) => {
+                        s.classList.toggle('active', i < rating);
+                    });
                 });
-            }
-
-            updateSubmitButton() {
-                const submitBtn = document.getElementById('submitBtn');
-                submitBtn.disabled = this.selectedRating === 0;
-            }
-
-            toggleManagerContact(show) {
-                const managerContact = document.getElementById('managerContact');
-                managerContact.classList.toggle('show', show);
-            }
-
-            async submitFeedback() {
-                if (this.selectedRating === 0) return;
-
-                const submitBtn = document.getElementById('submitBtn');
-                const loading = document.getElementById('loading');
-                
-                submitBtn.disabled = true;
-                loading.classList.add('show');
-
-                try {
-                    const feedbackData = {
-                        token: this.token,
-                        rating: this.selectedRating,
-                        comment: document.getElementById('comment').value,
-                        tableNumber: document.getElementById('tableNumber').value,
-                        lastName: document.getElementById('lastName').value,
-                        timestamp: new Date().toISOString(),
-                        deviceInfo: {
-                            userAgent: navigator.userAgent,
-                            ip: 'demo', // In real app, get from server
-                            location: null // Would get location if permission granted
-                        }
-                    };
-
-                    // Simulate API call
-                    await this.simulateAPICall(feedbackData);
-                    
-                    this.showSuccess();
-                    
-                } catch (error) {
-                    console.error('Submit feedback error:', error);
-                    this.showError('Failed to submit feedback. Please try again.');
-                } finally {
-                    loading.classList.remove('show');
-                    submitBtn.disabled = false;
-                }
-            }
-
-            async simulateAPICall(data) {
-                // Simulate network delay
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                
-                // Store in localStorage for demo (in real app, send to backend)
-                const existingRatings = JSON.parse(localStorage.getItem('demo_ratings') || '[]');
-                const rating = {
-                    id: `rating_${Date.now()}_${Math.random()}`,
-                    waiterId: 'demo_waiter', // Would get from token validation
-                    guestId: `guest_${Date.now()}`,
-                    qrToken: data.token,
-                    rating: data.rating,
-                    comment: data.comment || undefined,
-                    tableNumber: data.tableNumber || undefined,
-                    timestamp: new Date(data.timestamp),
-                    isVerified: true,
-                    isFlagged: false,
-                    location: data.deviceInfo.location
+            });
+            
+            document.getElementById(ratingId).addEventListener('mouseleave', () => {
+                const currentRating = parseInt(valueInput.value) || 0;
+                stars.forEach((s, i) => {
+                    s.classList.toggle('active', i < currentRating);
+                });
+            });
+        }
+        
+        // Setup all rating groups
+        setupRating('serviceRating', 'serviceRatingValue');
+        setupRating('foodRating', 'foodRatingValue');
+        setupRating('ambianceRating', 'ambianceRatingValue');
+        
+        // Form submission
+        document.getElementById('feedbackForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            const loadingMessage = document.getElementById('loadingMessage');
+            
+            // Hide previous messages
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+            loadingMessage.style.display = 'block';
+            submitBtn.disabled = true;
+            
+            try {
+                const formData = new FormData(e.target);
+                const feedbackData = {
+                    token: token,
+                    waiterName: formData.get('waiterName'),
+                    serviceRating: parseInt(formData.get('serviceRating')),
+                    foodRating: parseInt(formData.get('foodRating')),
+                    ambianceRating: parseInt(formData.get('ambianceRating')),
+                    comments: formData.get('comments'),
+                    timestamp: new Date().toISOString()
                 };
                 
-                existingRatings.push(rating);
-                localStorage.setItem('demo_ratings', JSON.stringify(existingRatings));
+                // For demo purposes, we'll simulate a successful submission
+                // In production, this would call your actual API
+                await new Promise(resolve => setTimeout(resolve, 1000));
                 
-                // Trigger a custom event that the mobile app can listen to
-                window.dispatchEvent(new CustomEvent('newRating', { detail: rating }));
+                // Simulate success
+                loadingMessage.style.display = 'none';
+                successMessage.style.display = 'block';
                 
-                console.log('Rating submitted:', rating);
-            }
-
-            showSuccess() {
-                document.getElementById('successMessage').classList.add('show');
-                document.getElementById('feedbackForm').style.display = 'none';
-                
-                // Auto-close after 5 seconds
+                // Reset form after 3 seconds
                 setTimeout(() => {
-                    window.close();
-                }, 5000);
+                    e.target.reset();
+                    successMessage.style.display = 'none';
+                    submitBtn.disabled = false;
+                }, 3000);
+                
+            } catch (error) {
+                console.error('Error submitting feedback:', error);
+                loadingMessage.style.display = 'none';
+                errorMessage.style.display = 'block';
+                submitBtn.disabled = false;
             }
-
-            showError(message) {
-                const errorMsg = document.getElementById('errorMessage');
-                errorMsg.querySelector('p').textContent = message;
-                errorMsg.classList.add('show');
-            }
-        }
-
-        // Initialize the feedback form
-        document.addEventListener('DOMContentLoaded', () => {
-            new FeedbackForm();
-        });
-
-        // Add some nice animations
-        document.addEventListener('DOMContentLoaded', () => {
-            const container = document.querySelector('.container');
-            container.style.opacity = '0';
-            container.style.transform = 'translateY(20px)';
-            
-            setTimeout(() => {
-                container.style.transition = 'all 0.5s ease';
-                container.style.opacity = '1';
-                container.style.transform = 'translateY(0)';
-            }, 100);
         });
     </script>
 </body>

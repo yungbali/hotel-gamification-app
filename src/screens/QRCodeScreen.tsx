@@ -3,7 +3,8 @@ import { View, StyleSheet, Alert } from 'react-native';
 import { Text, Card, Title, Paragraph, Button, Chip } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
 import { motion } from '../utils/motion';
-import QRCode from 'react-native-qrcode-svg';
+// import QRCode from 'react-native-qrcode-svg';
+import TestQRCode from '../components/Common/TestQRCode';
 import { AuthService } from '../services/authService';
 import { QRCodeService } from '../services/qrCodeService';
 import { StorageService } from '../services/storageService';
@@ -189,12 +190,8 @@ const QRCodeScreen: React.FC = () => {
             <Card style={styles.qrCard}>
               <Card.Content style={styles.qrCardContent}>
                 <View style={styles.qrContainer}>
-                  <QRCode
-                    value={qrCode.url}
-                    size={250}
-                    color="#000000"
-                    backgroundColor="#FFFFFF"
-                  />
+                  <TestQRCode />
+                  <Text style={styles.qrUrlText}>URL: {qrCode.url}</Text>
                 </View>
                 
                 <View style={styles.qrInfo}>
@@ -403,6 +400,12 @@ const styles = StyleSheet.create({
   },
   buttonContent: {
     paddingVertical: 8,
+  },
+  qrUrlText: {
+    fontSize: 12,
+    color: '#666',
+    marginTop: 10,
+    textAlign: 'center',
   },
 });
 

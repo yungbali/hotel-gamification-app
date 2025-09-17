@@ -21,7 +21,7 @@ export class QRCodeService {
       const token = this.generateUniqueToken();
       // Use environment-based URL
       const baseUrl = process.env.NODE_ENV === 'production' 
-        ? 'https://main.d1234567890.amplifyapp.com' // Replace with your actual Amplify URL
+        ? 'https://main.d256olrwmf8tqn.amplifyapp.com' // Your actual Amplify URL
         : 'http://localhost:3001';
       const url = `${baseUrl}/feedback/${token}`;
 

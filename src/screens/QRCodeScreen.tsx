@@ -3,8 +3,7 @@ import { View, StyleSheet, Alert } from 'react-native';
 import { Text, Card, Title, Paragraph, Button, Chip } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
 import { motion } from '../utils/motion';
-// import QRCode from 'react-native-qrcode-svg';
-import TestQRCode from '../components/Common/TestQRCode';
+import UniversalQRCode from '../components/Common/UniversalQRCode';
 import { AuthService } from '../services/authService';
 import { QRCodeService } from '../services/qrCodeService';
 import { StorageService } from '../services/storageService';
@@ -79,11 +78,16 @@ const QRCodeScreen: React.FC = () => {
       };
 
       await storageService.storeShift(newShift);
+      console.log('Shift created:', newShift);
+      
       const newQRCode = await qrCodeService.generateQRCode(user.id, newShift.id);
+      console.log('QR Code generated:', newQRCode);
 
       setShift(newShift);
       setQrCode(newQRCode);
       setIsActive(true);
+      
+      Alert.alert('Success', `QR Code generated! URL: ${newQRCode.url}`);
     } catch (error) {
       console.error('Start shift error:', error);
       Alert.alert('Error', 'Failed to start shift');
@@ -190,8 +194,12 @@ const QRCodeScreen: React.FC = () => {
             <Card style={styles.qrCard}>
               <Card.Content style={styles.qrCardContent}>
                 <View style={styles.qrContainer}>
-                  <TestQRCode />
-                  <Text style={styles.qrUrlText}>URL: {qrCode.url}</Text>
+                  <UniversalQRCode
+                    value={qrCode.url}
+                    size={250}
+                    color="#000000"
+                    backgroundColor="#FFFFFF"
+                  />
                 </View>
                 
                 <View style={styles.qrInfo}>

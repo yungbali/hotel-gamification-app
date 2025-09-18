@@ -9,14 +9,22 @@
     "web": "expo start --web",
     "feedback-server": "node feedback-server.js",
     "dev": "concurrently \"npm run feedback-server\" \"npm run web\"",
-    "install-server-deps": "npm install express cors"
+    "install-server-deps": "npm install express cors",
+    "amplify:sandbox": "npx ampx sandbox",
+    "amplify:deploy": "npx ampx pipeline-deploy --branch main",
+    "amplify:generate": "npx ampx generate graphql-client-code --format typescript"
   },
   "dependencies": {
+    "@aws-amplify/api-graphql": "^4.7.22",
+    "@aws-amplify/auth": "^6.15.1",
+    "@aws-amplify/backend": "^1.16.1",
+    "@aws-amplify/backend-cli": "^1.8.0",
     "@expo/vector-icons": "^15.0.2",
     "@react-native-async-storage/async-storage": "^2.2.0",
     "@react-navigation/bottom-tabs": "^7.4.7",
     "@react-navigation/native": "^7.1.17",
     "@react-navigation/stack": "^7.4.8",
+    "aws-amplify": "^6.15.6",
     "concurrently": "^9.2.1",
     "cors": "^2.8.5",
     "expo": "~54.0.7",

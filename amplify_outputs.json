@@ -1,0 +1,35 @@
+{
+  "version": "1",
+  "auth": {
+    "aws_region": "us-west-2",
+    "user_pool_id": "local-dev-pool",
+    "user_pool_client_id": "local-dev-client",
+    "identity_pool_id": "local-dev-identity",
+    "oauth": {},
+    "password_policy": {
+      "min_length": 8,
+      "require_lowercase": true,
+      "require_uppercase": true,
+      "require_numbers": true,
+      "require_symbols": false
+    },
+    "standard_required_attributes": ["email"],
+    "username_attributes": ["email"],
+    "user_verification_types": ["email"],
+    "mfa_configuration": "OFF"
+  },
+  "data": {
+    "aws_region": "us-west-2",
+    "url": "https://localhost:20002/graphql",
+    "model_introspection": {
+      "version": 1,
+      "models": {},
+      "nonModels": {},
+      "enums": {}
+    }
+  },
+  "notifications": {
+    "aws_region": "us-west-2",
+    "channels": ["APNS", "FCM", "EMAIL", "SMS", "IN_APP_MESSAGING"]
+  }
+}

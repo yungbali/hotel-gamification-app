@@ -9,6 +9,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { AuthService } from './src/services/authService';
 import { User } from './src/types';
+import { configureAmplify } from './src/services/amplifyClient';
 import LoginScreen from './src/screens/LoginScreen';
 import WaiterDashboard from './src/screens/WaiterDashboard';
 import ManagerDashboard from './src/screens/ManagerDashboard';
@@ -96,6 +97,9 @@ export default function App() {
 
   const checkAuthStatus = async () => {
     try {
+      // Initialize Amplify first
+      await configureAmplify();
+      
       const authService = AuthService.getInstance();
       
       // Initialize demo data on first run

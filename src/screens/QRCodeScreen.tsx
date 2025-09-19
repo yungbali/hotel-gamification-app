@@ -15,6 +15,7 @@ const QRCodeScreen: React.FC = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [shift, setShift] = useState<Shift | null>(null);
+  const [statusMessage, setStatusMessage] = useState<string>('');
 
   useEffect(() => {
     loadUser();
@@ -63,6 +64,7 @@ const QRCodeScreen: React.FC = () => {
     }
 
     setIsGenerating(true);
+    setStatusMessage('');
     try {
       const storageService = getDataService();
       const qrCodeService = QRCodeService.getInstance();
@@ -86,25 +88,17 @@ const QRCodeScreen: React.FC = () => {
       setShift(newShift);
       setQrCode(newQRCode);
       setIsActive(true);
-      
-      Alert.alert('Success', `QR Code generated! URL: ${newQRCode.url}`);
+      setStatusMessage('Shift is live! Share the QR code below with guests.');
     } catch (error) {
       console.error('Start shift error:', error);
-      Alert.alert('Error', 'Failed to start shift');
+      setStatusMessage('Unable to start shift. Please try again or refresh the page.');
     } finally {
       setIsGenerating(false);
     }
   };
 
   const startShift = async () => {
-    Alert.alert(
-      'Start Shift',
-      'Are you ready to start your shift and begin collecting ratings?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'Start Shift', onPress: handleStartShift },
-      ]
-    );
+    await handleStartShift();
   };
 
   const endShift = () => {
@@ -182,6 +176,9 @@ const QRCodeScreen: React.FC = () => {
                 >
                   Start Shift
                 </Button>
+                {statusMessage ? (
+                  <Paragraph style={styles.statusMessage}>{statusMessage}</Paragraph>
+                ) : null}
               </Card.Content>
             </Card>
           </motion.div>
@@ -221,6 +218,9 @@ const QRCodeScreen: React.FC = () => {
                   <Text style={styles.shiftMeta}>
                     Expires {qrCode?.expiresAt ? new Date(qrCode.expiresAt).toLocaleTimeString() : 'in 24 hours'}
                   </Text>
+                  {statusMessage ? (
+                    <Paragraph style={styles.statusMessage}>{statusMessage}</Paragraph>
+                  ) : null}
                 </View>
 
                 <View style={styles.instructionsContainer}>
@@ -368,6 +368,11 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: '#999',
     marginTop: 2,
+  },
+  statusMessage: {
+    marginTop: 8,
+    textAlign: 'center',
+    color: '#2196F3',
   },
   instructionsContainer: {
     width: '100%',

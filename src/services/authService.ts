@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { User, Waiter, Manager, Hotel } from '../types';
 import { StorageService } from './storageService';
+import { AmplifyStorageService } from './amplifyStorageService';
 import { isAmplifyConfigured, shouldUseAmplify } from './amplifyClient';
 import { signIn, signOut, getCurrentUser, signUp, confirmSignUp, fetchAuthSession } from 'aws-amplify/auth';
 
@@ -20,7 +21,10 @@ export class AuthService {
   }
 
   constructor() {
-    this.storageService = StorageService.getInstance();
+    // Use Amplify storage if available, otherwise fallback to local storage
+    this.storageService = shouldUseAmplify() 
+      ? AmplifyStorageService.getInstance() as any
+      : StorageService.getInstance();
   }
 
   async login(email: string, password: string): Promise<User> {

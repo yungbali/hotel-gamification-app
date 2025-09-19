@@ -1,5 +1,7 @@
 import { Waiter, Badge, Leaderboard, LeaderboardEntry } from '../types';
 import { StorageService } from './storageService';
+import { AmplifyStorageService } from './amplifyStorageService';
+import { shouldUseAmplify } from './amplifyClient';
 
 export class GamificationService {
   private static instance: GamificationService;
@@ -13,7 +15,10 @@ export class GamificationService {
   }
 
   constructor() {
-    this.storageService = StorageService.getInstance();
+    // Use Amplify storage if available, otherwise fallback to local storage
+    this.storageService = shouldUseAmplify() 
+      ? AmplifyStorageService.getInstance() as any
+      : StorageService.getInstance();
   }
 
   async calculatePoints(rating: number): Promise<number> {

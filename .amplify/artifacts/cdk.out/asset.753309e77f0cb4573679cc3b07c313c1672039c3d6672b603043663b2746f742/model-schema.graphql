@@ -1,0 +1,132 @@
+type Hotel @model @auth(rules: [{allow: private}])
+{
+  name: String!
+  address: String
+  timezone: String @default(value: "UTC")
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+  users: [User] @hasMany(references: ["hotelId"])
+  ratings: [Rating] @hasMany(references: ["hotelId"])
+  shifts: [Shift] @hasMany(references: ["hotelId"])
+  analyticsEntries: [Analytics] @hasMany(references: ["hotelId"])
+}
+
+type User @model @auth(rules: [{allow: private}])
+{
+  email: String!
+  name: String!
+  role: UserRole
+  hotelId: ID
+  points: Int @default(value: "0")
+  level: Int @default(value: "1")
+  totalRatings: Int @default(value: "0")
+  averageRating: Float @default(value: "0")
+  isActive: Boolean @default(value: "true")
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+  hotel: Hotel @belongsTo(references: ["hotelId"])
+  shifts: [Shift] @hasMany(references: ["waiterId"])
+  ratings: [Rating] @hasMany(references: ["waiterId"])
+  badges: [Badge] @hasMany(references: ["waiterId"])
+  qrCodes: [QRCode] @hasMany(references: ["waiterId"])
+}
+
+type Rating @model @auth(rules: [{allow: private}])
+{
+  waiterId: ID!
+  hotelId: ID!
+  rating: Int!
+  serviceRating: Int
+  foodRating: Int
+  ambianceRating: Int
+  comment: String
+  tableNumber: String
+  guestName: String
+  timestamp: AWSDateTime!
+  qrToken: String
+  deviceInfo: AWSJSON
+  isFlagged: Boolean @default(value: "false")
+  flaggedReason: String
+  isResolved: Boolean @default(value: "false")
+  resolvedBy: ID
+  resolvedAt: AWSDateTime
+  resolutionNotes: String
+  waiter: User @belongsTo(references: ["waiterId"])
+  hotel: Hotel @belongsTo(references: ["hotelId"])
+}
+
+type QRCode @model @auth(rules: [{allow: private}])
+{
+  waiterId: ID!
+  shiftId: ID!
+  token: String!
+  url: String!
+  isUsed: Boolean @default(value: "false")
+  usedAt: AWSDateTime
+  expiresAt: AWSDateTime!
+  createdAt: AWSDateTime
+  waiter: User @belongsTo(references: ["waiterId"])
+  shift: Shift @belongsTo(references: ["shiftId"])
+}
+
+type Shift @model @auth(rules: [{allow: private}])
+{
+  waiterId: ID!
+  hotelId: ID!
+  startTime: AWSDateTime!
+  endTime: AWSDateTime
+  isActive: Boolean @default(value: "true")
+  pointsEarned: Int @default(value: "0")
+  ratingsCount: Int @default(value: "0")
+  averageRating: Float @default(value: "0")
+  totalTips: Float @default(value: "0")
+  waiter: User @belongsTo(references: ["waiterId"])
+  hotel: Hotel @belongsTo(references: ["hotelId"])
+  qrCodes: [QRCode] @hasMany(references: ["shiftId"])
+}
+
+type Badge @model @auth(rules: [{allow: private}])
+{
+  waiterId: ID!
+  type: BadgeType
+  name: String!
+  description: String
+  icon: String
+  earnedAt: AWSDateTime!
+  criteria: AWSJSON
+  waiter: User @belongsTo(references: ["waiterId"])
+}
+
+type Analytics @model @auth(rules: [{allow: private}])
+{
+  hotelId: ID!
+  period: AnalyticsPeriod
+  date: AWSDate!
+  totalRatings: Int @default(value: "0")
+  averageRating: Float @default(value: "0")
+  totalPoints: Int @default(value: "0")
+  activeWaiters: Int @default(value: "0")
+  topWaiterId: ID
+  metrics: AWSJSON
+  hotel: Hotel @belongsTo(references: ["hotelId"])
+}
+
+enum UserRole {
+  waiter
+  manager
+  admin
+}
+
+enum BadgeType {
+  service_star
+  customer_favorite
+  team_player
+  rising_star
+  efficiency_expert
+}
+
+enum AnalyticsPeriod {
+  daily
+  weekly
+  monthly
+}

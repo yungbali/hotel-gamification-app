@@ -7,9 +7,9 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { configureAmplify } from './src/services/amplifyClient';
 import { AuthService } from './src/services/authService';
 import { User } from './src/types';
-import { configureAmplify } from './src/services/amplifyClient';
 import LoginScreen from './src/screens/LoginScreen';
 import WaiterDashboard from './src/screens/WaiterDashboard';
 import ManagerDashboard from './src/screens/ManagerDashboard';
@@ -86,6 +86,8 @@ function ManagerTabs() {
     </Tab.Navigator>
   );
 }
+
+configureAmplify();
 
 export default function App() {
   const [user, setUser] = useState<User | null>(null);

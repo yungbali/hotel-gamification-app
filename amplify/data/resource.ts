@@ -9,6 +9,10 @@ const schema = a.schema({
       timezone: a.string().default('UTC'),
       createdAt: a.datetime(),
       updatedAt: a.datetime(),
+      users: a.hasMany('User', 'hotelId'),
+      ratings: a.hasMany('Rating', 'hotelId'),
+      shifts: a.hasMany('Shift', 'hotelId'),
+      analyticsEntries: a.hasMany('Analytics', 'hotelId'),
     })
     .authorization((allow) => [
       allow.authenticated(),
@@ -34,6 +38,7 @@ const schema = a.schema({
       shifts: a.hasMany('Shift', 'waiterId'),
       ratings: a.hasMany('Rating', 'waiterId'),
       badges: a.hasMany('Badge', 'waiterId'),
+      qrCodes: a.hasMany('QRCode', 'waiterId'),
     })
     .authorization((allow) => [
       allow.authenticated(),

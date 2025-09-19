@@ -1,0 +1,2130 @@
+{
+ "Parameters": {
+  "DynamoDBModelTableReadIOPS": {
+   "Type": "Number",
+   "Default": 5,
+   "Description": "The number of read IOPS the table should support."
+  },
+  "DynamoDBModelTableWriteIOPS": {
+   "Type": "Number",
+   "Default": 5,
+   "Description": "The number of write IOPS the table should support."
+  },
+  "DynamoDBBillingMode": {
+   "Type": "String",
+   "Default": "PAY_PER_REQUEST",
+   "AllowedValues": [
+    "PAY_PER_REQUEST",
+    "PROVISIONED"
+   ],
+   "Description": "Configure @model types to create DynamoDB tables with PAY_PER_REQUEST or PROVISIONED billing modes."
+  },
+  "DynamoDBEnablePointInTimeRecovery": {
+   "Type": "String",
+   "Default": "false",
+   "AllowedValues": [
+    "true",
+    "false"
+   ],
+   "Description": "Whether to enable Point in Time Recovery on the table."
+  },
+  "DynamoDBEnableServerSideEncryption": {
+   "Type": "String",
+   "Default": "true",
+   "AllowedValues": [
+    "true",
+    "false"
+   ],
+   "Description": "Enable server side encryption powered by KMS."
+  },
+  "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResourceF65423DCOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDa8A8AB376": {
+   "Type": "String"
+  },
+  "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId": {
+   "Type": "String"
+  },
+  "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name": {
+   "Type": "String"
+  },
+  "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthauthenticatedUserRole97E7C1E3Ref": {
+   "Type": "String"
+  },
+  "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthunauthenticatedUserRole8BA64B86Ref": {
+   "Type": "String"
+  },
+  "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthIdentityPool26B3F380Ref": {
+   "Type": "String"
+  }
+ },
+ "Conditions": {
+  "HasEnvironmentParameter": {
+   "Fn::Not": [
+    {
+     "Fn::Equals": [
+      "NONE",
+      "NONE"
+     ]
+    }
+   ]
+  },
+  "ShouldUsePayPerRequestBilling": {
+   "Fn::Equals": [
+    {
+     "Ref": "DynamoDBBillingMode"
+    },
+    "PAY_PER_REQUEST"
+   ]
+  },
+  "ShouldUsePointInTimeRecovery": {
+   "Fn::Equals": [
+    {
+     "Ref": "DynamoDBEnablePointInTimeRecovery"
+    },
+    "true"
+   ]
+  },
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-3"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-4"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-2"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "il-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Equals": [
+      {
+       "Ref": "AWS::Region"
+      },
+      "us-west-2"
+     ]
+    }
+   ]
+  }
+ },
+ "Resources": {
+  "BadgeTable": {
+   "Type": "Custom::AmplifyDynamoDBTable",
+   "Properties": {
+    "ServiceToken": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResourceF65423DCOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDa8A8AB376"
+    },
+    "tableName": {
+     "Fn::Join": [
+      "",
+      [
+       "Badge-",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+       },
+       "-NONE"
+      ]
+     ]
+    },
+    "attributeDefinitions": [
+     {
+      "attributeName": "id",
+      "attributeType": "S"
+     },
+     {
+      "attributeName": "waiterId",
+      "attributeType": "S"
+     }
+    ],
+    "keySchema": [
+     {
+      "attributeName": "id",
+      "keyType": "HASH"
+     }
+    ],
+    "globalSecondaryIndexes": [
+     {
+      "indexName": "gsi-User.badges",
+      "keySchema": [
+       {
+        "attributeName": "waiterId",
+        "keyType": "HASH"
+       }
+      ],
+      "projection": {
+       "projectionType": "ALL"
+      },
+      "provisionedThroughput": {
+       "Fn::If": [
+        "ShouldUsePayPerRequestBilling",
+        {
+         "Ref": "AWS::NoValue"
+        },
+        {
+         "ReadCapacityUnits": {
+          "Ref": "DynamoDBModelTableReadIOPS"
+         },
+         "WriteCapacityUnits": {
+          "Ref": "DynamoDBModelTableWriteIOPS"
+         }
+        }
+       ]
+      }
+     }
+    ],
+    "provisionedThroughput": {
+     "Fn::If": [
+      "ShouldUsePayPerRequestBilling",
+      {
+       "Ref": "AWS::NoValue"
+      },
+      {
+       "ReadCapacityUnits": {
+        "Ref": "DynamoDBModelTableReadIOPS"
+       },
+       "WriteCapacityUnits": {
+        "Ref": "DynamoDBModelTableWriteIOPS"
+       }
+      }
+     ]
+    },
+    "sseSpecification": {
+     "sseEnabled": false
+    },
+    "streamSpecification": {
+     "streamViewType": "NEW_AND_OLD_IMAGES"
+    },
+    "deletionProtectionEnabled": false,
+    "allowDestructiveGraphqlSchemaUpdates": true,
+    "replaceTableUponGsiUpdate": true,
+    "pointInTimeRecoverySpecification": {
+     "Fn::If": [
+      "ShouldUsePointInTimeRecovery",
+      {
+       "PointInTimeRecoveryEnabled": true
+      },
+      {
+       "Ref": "AWS::NoValue"
+      }
+     ]
+    },
+    "billingMode": {
+     "Fn::If": [
+      "ShouldUsePayPerRequestBilling",
+      "PAY_PER_REQUEST",
+      {
+       "Ref": "AWS::NoValue"
+      }
+     ]
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/BadgeTable/Default/Default"
+   }
+  },
+  "BadgeIAMRole2C11E66A": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "appsync.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Policies": [
+     {
+      "PolicyDocument": {
+       "Statement": [
+        {
+         "Action": [
+          "dynamodb:BatchGetItem",
+          "dynamodb:BatchWriteItem",
+          "dynamodb:PutItem",
+          "dynamodb:DeleteItem",
+          "dynamodb:GetItem",
+          "dynamodb:Scan",
+          "dynamodb:Query",
+          "dynamodb:UpdateItem",
+          "dynamodb:ConditionCheckItem",
+          "dynamodb:DescribeTable",
+          "dynamodb:GetRecords",
+          "dynamodb:GetShardIterator"
+         ],
+         "Effect": "Allow",
+         "Resource": [
+          {
+           "Fn::Sub": [
+            "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}",
+            {
+             "tablename": {
+              "Fn::Join": [
+               "",
+               [
+                "Badge-",
+                {
+                 "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+                },
+                "-NONE"
+               ]
+              ]
+             }
+            }
+           ]
+          },
+          {
+           "Fn::Sub": [
+            "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}/*",
+            {
+             "tablename": {
+              "Fn::Join": [
+               "",
+               [
+                "Badge-",
+                {
+                 "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+                },
+                "-NONE"
+               ]
+              ]
+             }
+            }
+           ]
+          }
+         ]
+        }
+       ],
+       "Version": "2012-10-17"
+      },
+      "PolicyName": "DynamoDBAccess"
+     }
+    ],
+    "RoleName": {
+     "Fn::Join": [
+      "",
+      [
+       "BadgeIAMRole108a48-",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+       },
+       "-NONE"
+      ]
+     ]
+    },
+    "Tags": [
+     {
+      "Key": "amplify:deployment-type",
+      "Value": "sandbox"
+     },
+     {
+      "Key": "amplify:friendly-name",
+      "Value": "amplifyData"
+     },
+     {
+      "Key": "created-by",
+      "Value": "amplify"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/BadgeIAMRole/Resource"
+   }
+  },
+  "BadgeDataSource": {
+   "Type": "AWS::AppSync::DataSource",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DynamoDBConfig": {
+     "AwsRegion": {
+      "Ref": "AWS::Region"
+     },
+     "TableName": {
+      "Fn::Select": [
+       1,
+       {
+        "Fn::Split": [
+         "/",
+         {
+          "Fn::Select": [
+           5,
+           {
+            "Fn::Split": [
+             ":",
+             {
+              "Fn::GetAtt": [
+               "BadgeTable",
+               "TableArn"
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       }
+      ]
+     }
+    },
+    "Name": "BadgeTable",
+    "ServiceRoleArn": {
+     "Fn::GetAtt": [
+      "BadgeIAMRole2C11E66A",
+      "Arn"
+     ]
+    },
+    "Type": "AMAZON_DYNAMODB"
+   },
+   "DependsOn": [
+    "BadgeIAMRole2C11E66A"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/BadgeDataSource/Resource"
+   }
+  },
+  "QuerygetBadgeauth0FunctionQuerygetBadgeauth0FunctionAppSyncFunctionF0383EFC": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerygetBadgeauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/88d5b7081b0dc9c39fd0bffedf56f011b2a7cf1ce5cc227f47a1e94efee8067c.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/QuerygetBadgeauth0Function/QuerygetBadgeauth0Function.AppSyncFunction"
+   }
+  },
+  "QuerygetBadgepostAuth0FunctionQuerygetBadgepostAuth0FunctionAppSyncFunction20D940C7": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerygetBadgepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/QuerygetBadgepostAuth0Function/QuerygetBadgepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "QueryGetBadgeDataResolverFnQueryGetBadgeDataResolverFnAppSyncFunctionBAD1315C": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "BadgeDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QueryGetBadgeDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/08f4d557693d96c1a4efba0f9dc91330e4b19772fd5477c156468843e3d9cb5e.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4c6a2d29f01c6091bd1d9afe16e5849d456c96f17c3b215938c8067399532719.vtl"
+    }
+   },
+   "DependsOn": [
+    "BadgeDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/QueryGetBadgeDataResolverFn/QueryGetBadgeDataResolverFn.AppSyncFunction"
+   }
+  },
+  "GetBadgeResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "FieldName": "getBadge",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "QuerygetBadgeauth0FunctionQuerygetBadgeauth0FunctionAppSyncFunctionF0383EFC",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QuerygetBadgepostAuth0FunctionQuerygetBadgepostAuth0FunctionAppSyncFunction20D940C7",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QueryGetBadgeDataResolverFnQueryGetBadgeDataResolverFnAppSyncFunctionBAD1315C",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"getBadge\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "BadgeTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthauthenticatedUserRole97E7C1E3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthunauthenticatedUserRole8BA64B86Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthIdentityPool26B3F380Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Query"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/queryGetBadgeResolver"
+   }
+  },
+  "QuerylistBadgesauth0FunctionQuerylistBadgesauth0FunctionAppSyncFunctionEE3690B2": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerylistBadgesauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/88d5b7081b0dc9c39fd0bffedf56f011b2a7cf1ce5cc227f47a1e94efee8067c.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/QuerylistBadgesauth0Function/QuerylistBadgesauth0Function.AppSyncFunction"
+   }
+  },
+  "QuerylistBadgespostAuth0FunctionQuerylistBadgespostAuth0FunctionAppSyncFunction0255F7D5": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerylistBadgespostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/QuerylistBadgespostAuth0Function/QuerylistBadgespostAuth0Function.AppSyncFunction"
+   }
+  },
+  "QueryListBadgesDataResolverFnQueryListBadgesDataResolverFnAppSyncFunctionABB1C986": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "BadgeDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QueryListBadgesDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/9fcbe070ecd3023c5bf5b966fa9584757db9762eef123bad0820bd87591b2174.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/cc01911d0269d4080ea57505dc445dfc315ef7ad85d3d9d4ea1357858bff451d.vtl"
+    }
+   },
+   "DependsOn": [
+    "BadgeDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/QueryListBadgesDataResolverFn/QueryListBadgesDataResolverFn.AppSyncFunction"
+   }
+  },
+  "ListBadgeResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "FieldName": "listBadges",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "QuerylistBadgesauth0FunctionQuerylistBadgesauth0FunctionAppSyncFunctionEE3690B2",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QuerylistBadgespostAuth0FunctionQuerylistBadgespostAuth0FunctionAppSyncFunction0255F7D5",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QueryListBadgesDataResolverFnQueryListBadgesDataResolverFnAppSyncFunctionABB1C986",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"listBadges\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "BadgeTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthauthenticatedUserRole97E7C1E3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthunauthenticatedUserRole8BA64B86Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthIdentityPool26B3F380Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Query"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/queryListBadgesResolver"
+   }
+  },
+  "MutationcreateBadgeinit0FunctionMutationcreateBadgeinit0FunctionAppSyncFunction20363D87": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreateBadgeinit0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/a183ddccbd956316c38ef97177b8f088ef0826f62023323f5ae6053d348ccffc.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/MutationcreateBadgeinit0Function/MutationcreateBadgeinit0Function.AppSyncFunction"
+   }
+  },
+  "MutationcreateBadgeauth0FunctionMutationcreateBadgeauth0FunctionAppSyncFunction13B0FE0B": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreateBadgeauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/b371d68ddfbdd11b176756ce33b2c4e79d26fcc2fd4b7c0c9e75d06efacee90e.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/MutationcreateBadgeauth0Function/MutationcreateBadgeauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationcreateBadgepostAuth0FunctionMutationcreateBadgepostAuth0FunctionAppSyncFunctionCB620815": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreateBadgepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/MutationcreateBadgepostAuth0Function/MutationcreateBadgepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationCreateBadgeDataResolverFnMutationCreateBadgeDataResolverFnAppSyncFunction4A3B019A": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "BadgeDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationCreateBadgeDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/84cfcecc43bcc264ae293c518206c30bd92ff115f17697f6d61d5b5d699f7271.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "BadgeDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/MutationCreateBadgeDataResolverFn/MutationCreateBadgeDataResolverFn.AppSyncFunction"
+   }
+  },
+  "CreateBadgeResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "FieldName": "createBadge",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationcreateBadgeinit0FunctionMutationcreateBadgeinit0FunctionAppSyncFunction20363D87",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationcreateBadgeauth0FunctionMutationcreateBadgeauth0FunctionAppSyncFunction13B0FE0B",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationcreateBadgepostAuth0FunctionMutationcreateBadgepostAuth0FunctionAppSyncFunctionCB620815",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationCreateBadgeDataResolverFnMutationCreateBadgeDataResolverFnAppSyncFunction4A3B019A",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"createBadge\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "BadgeTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthauthenticatedUserRole97E7C1E3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthunauthenticatedUserRole8BA64B86Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthIdentityPool26B3F380Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/mutationCreateBadgeResolver"
+   }
+  },
+  "MutationupdateBadgeinit0FunctionMutationupdateBadgeinit0FunctionAppSyncFunction8A089C08": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdateBadgeinit0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/06db846fd14e6fc371f22b12b5545ba8e2dbfeda85d8c8d586c71c282166657b.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/MutationupdateBadgeinit0Function/MutationupdateBadgeinit0Function.AppSyncFunction"
+   }
+  },
+  "MutationupdateBadgeauth0FunctionMutationupdateBadgeauth0FunctionAppSyncFunctionB02FBBFE": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "BadgeDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdateBadgeauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/1f5fed297da9c32ae3af922bf3a38ccf23b956078887d16891ec06c20c64722c.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/245ed8ac5185462a6923b7e45a318fec4c9ba0c45d1d720abd5b20317aa3dc6a.vtl"
+    }
+   },
+   "DependsOn": [
+    "BadgeDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/MutationupdateBadgeauth0Function/MutationupdateBadgeauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationupdateBadgepostAuth0FunctionMutationupdateBadgepostAuth0FunctionAppSyncFunction5DF1DDB1": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdateBadgepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/MutationupdateBadgepostAuth0Function/MutationupdateBadgepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationUpdateBadgeDataResolverFnMutationUpdateBadgeDataResolverFnAppSyncFunctionC6C40D39": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "BadgeDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationUpdateBadgeDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/474bf0776ec2164a13191d1a0a9e057154931e4918fea5086f49850d02a5371b.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "BadgeDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/MutationUpdateBadgeDataResolverFn/MutationUpdateBadgeDataResolverFn.AppSyncFunction"
+   }
+  },
+  "UpdateBadgeResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "FieldName": "updateBadge",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationupdateBadgeinit0FunctionMutationupdateBadgeinit0FunctionAppSyncFunction8A089C08",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationupdateBadgeauth0FunctionMutationupdateBadgeauth0FunctionAppSyncFunctionB02FBBFE",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationupdateBadgepostAuth0FunctionMutationupdateBadgepostAuth0FunctionAppSyncFunction5DF1DDB1",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationUpdateBadgeDataResolverFnMutationUpdateBadgeDataResolverFnAppSyncFunctionC6C40D39",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"updateBadge\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "BadgeTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthauthenticatedUserRole97E7C1E3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthunauthenticatedUserRole8BA64B86Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthIdentityPool26B3F380Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/mutationUpdateBadgeResolver"
+   }
+  },
+  "MutationdeleteBadgeauth0FunctionMutationdeleteBadgeauth0FunctionAppSyncFunction5C243B80": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "BadgeDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationdeleteBadgeauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/1f5fed297da9c32ae3af922bf3a38ccf23b956078887d16891ec06c20c64722c.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/29e4bdb03133f87f2b1acb547959ffd4cfd22804026994c5b61db33084127353.vtl"
+    }
+   },
+   "DependsOn": [
+    "BadgeDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/MutationdeleteBadgeauth0Function/MutationdeleteBadgeauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationdeleteBadgepostAuth0FunctionMutationdeleteBadgepostAuth0FunctionAppSyncFunction9CA995D2": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationdeleteBadgepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/MutationdeleteBadgepostAuth0Function/MutationdeleteBadgepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationDeleteBadgeDataResolverFnMutationDeleteBadgeDataResolverFnAppSyncFunction0B3579BA": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "BadgeDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationDeleteBadgeDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4f7907d1209a2c9953a0c053df402c634e359546d70c7cc5c2e8e21ea734880f.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "BadgeDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/MutationDeleteBadgeDataResolverFn/MutationDeleteBadgeDataResolverFn.AppSyncFunction"
+   }
+  },
+  "DeleteBadgeResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "FieldName": "deleteBadge",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationdeleteBadgeauth0FunctionMutationdeleteBadgeauth0FunctionAppSyncFunction5C243B80",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationdeleteBadgepostAuth0FunctionMutationdeleteBadgepostAuth0FunctionAppSyncFunction9CA995D2",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationDeleteBadgeDataResolverFnMutationDeleteBadgeDataResolverFnAppSyncFunction0B3579BA",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"deleteBadge\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "BadgeTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthauthenticatedUserRole97E7C1E3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthunauthenticatedUserRole8BA64B86Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthIdentityPool26B3F380Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/mutationDeleteBadgeResolver"
+   }
+  },
+  "SubscriptiononCreateBadgeauth0FunctionSubscriptiononCreateBadgeauth0FunctionAppSyncFunction020EDFA5": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononCreateBadgeauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6f3a2a9d562ae3058cc1aed6741edbf5edcaef7b3df7b03f52478816a1c95ffb.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/SubscriptiononCreateBadgeauth0Function/SubscriptiononCreateBadgeauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononCreateBadgepostAuth0FunctionSubscriptiononCreateBadgepostAuth0FunctionAppSyncFunctionCED183DC": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononCreateBadgepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/SubscriptiononCreateBadgepostAuth0Function/SubscriptiononCreateBadgepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnCreateBadgeDataResolverFnSubscriptionOnCreateBadgeDataResolverFnAppSyncFunctionAAC2857F": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnCreateBadgeDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/SubscriptionOnCreateBadgeDataResolverFn/SubscriptionOnCreateBadgeDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononCreateBadgeResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "FieldName": "onCreateBadge",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononCreateBadgeauth0FunctionSubscriptiononCreateBadgeauth0FunctionAppSyncFunction020EDFA5",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononCreateBadgepostAuth0FunctionSubscriptiononCreateBadgepostAuth0FunctionAppSyncFunctionCED183DC",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnCreateBadgeDataResolverFnSubscriptionOnCreateBadgeDataResolverFnAppSyncFunctionAAC2857F",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onCreateBadge\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthauthenticatedUserRole97E7C1E3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthunauthenticatedUserRole8BA64B86Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthIdentityPool26B3F380Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/subscriptionOnCreateBadgeResolver"
+   }
+  },
+  "SubscriptiononUpdateBadgeauth0FunctionSubscriptiononUpdateBadgeauth0FunctionAppSyncFunctionB57614B2": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononUpdateBadgeauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6f3a2a9d562ae3058cc1aed6741edbf5edcaef7b3df7b03f52478816a1c95ffb.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/SubscriptiononUpdateBadgeauth0Function/SubscriptiononUpdateBadgeauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononUpdateBadgepostAuth0FunctionSubscriptiononUpdateBadgepostAuth0FunctionAppSyncFunction4049DDFD": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononUpdateBadgepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/SubscriptiononUpdateBadgepostAuth0Function/SubscriptiononUpdateBadgepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnUpdateBadgeDataResolverFnSubscriptionOnUpdateBadgeDataResolverFnAppSyncFunction991CFDAA": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnUpdateBadgeDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/SubscriptionOnUpdateBadgeDataResolverFn/SubscriptionOnUpdateBadgeDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononUpdateBadgeResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "FieldName": "onUpdateBadge",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononUpdateBadgeauth0FunctionSubscriptiononUpdateBadgeauth0FunctionAppSyncFunctionB57614B2",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononUpdateBadgepostAuth0FunctionSubscriptiononUpdateBadgepostAuth0FunctionAppSyncFunction4049DDFD",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnUpdateBadgeDataResolverFnSubscriptionOnUpdateBadgeDataResolverFnAppSyncFunction991CFDAA",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onUpdateBadge\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthauthenticatedUserRole97E7C1E3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthunauthenticatedUserRole8BA64B86Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthIdentityPool26B3F380Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/subscriptionOnUpdateBadgeResolver"
+   }
+  },
+  "SubscriptiononDeleteBadgeauth0FunctionSubscriptiononDeleteBadgeauth0FunctionAppSyncFunction47432AC3": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononDeleteBadgeauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6f3a2a9d562ae3058cc1aed6741edbf5edcaef7b3df7b03f52478816a1c95ffb.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/SubscriptiononDeleteBadgeauth0Function/SubscriptiononDeleteBadgeauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononDeleteBadgepostAuth0FunctionSubscriptiononDeleteBadgepostAuth0FunctionAppSyncFunction482A343D": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononDeleteBadgepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/SubscriptiononDeleteBadgepostAuth0Function/SubscriptiononDeleteBadgepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnDeleteBadgeDataResolverFnSubscriptionOnDeleteBadgeDataResolverFnAppSyncFunctionF374110C": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnDeleteBadgeDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/SubscriptionOnDeleteBadgeDataResolverFn/SubscriptionOnDeleteBadgeDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononDeleteBadgeResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "FieldName": "onDeleteBadge",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononDeleteBadgeauth0FunctionSubscriptiononDeleteBadgeauth0FunctionAppSyncFunction47432AC3",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononDeleteBadgepostAuth0FunctionSubscriptiononDeleteBadgepostAuth0FunctionAppSyncFunction482A343D",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnDeleteBadgeDataResolverFnSubscriptionOnDeleteBadgeDataResolverFnAppSyncFunctionF374110C",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onDeleteBadge\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthauthenticatedUserRole97E7C1E3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthunauthenticatedUserRole8BA64B86Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthIdentityPool26B3F380Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/subscriptionOnDeleteBadgeResolver"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/1WQ0U7DMAxFv4X31EA3PoC14hFQx/vkJm6VtUmq2Bmaqv47aYeGeLo+8pV97RLK5xd4esBvLrQZitG2ML8TC5mjoB5U1flPjOhIKK5QBW+s2OBVQxxS1KSqxBLcH3b+Xuexp9lcPbpgWvjCdqQDMimLDuYmjDd31kXhNPHVa5jrzV63NQoe7yP/01vyeg2R03S2TxG3RL+bxwvFRfHuhMwkDK+rZIZD0gPJGmBZvR9JpiRqa+dje+v7RflgCM78eCn3UObHnNnaIiYv1hE0N/0BW4d8cDUBAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/Badge/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Outputs": {
+  "GetAttBadgeTableStreamArn": {
+   "Description": "Your DynamoDB table StreamArn.",
+   "Value": {
+    "Fn::GetAtt": [
+     "BadgeTable",
+     "TableStreamArn"
+    ]
+   },
+   "Export": {
+    "Name": {
+     "Fn::Join": [
+      ":",
+      [
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+       },
+       "GetAtt:BadgeTable:StreamArn"
+      ]
+     ]
+    }
+   }
+  },
+  "GetAttBadgeTableName": {
+   "Description": "Your DynamoDB table name.",
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "Badge-",
+      {
+       "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+      },
+      "-NONE"
+     ]
+    ]
+   },
+   "Export": {
+    "Name": {
+     "Fn::Join": [
+      ":",
+      [
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+       },
+       "GetAtt:BadgeTable:Name"
+      ]
+     ]
+    }
+   }
+  },
+  "amplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataBadgeBadgeDataSource2AD29348Name": {
+   "Value": {
+    "Fn::GetAtt": [
+     "BadgeDataSource",
+     "Name"
+    ]
+   }
+  },
+  "amplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataBadgeBadgeTable0AFA27BDTableArn": {
+   "Value": {
+    "Fn::GetAtt": [
+     "BadgeTable",
+     "TableArn"
+    ]
+   }
+  }
+ }
+}

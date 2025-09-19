@@ -1,11 +1,9 @@
 import { QRCode } from '../types';
-import { StorageService } from './storageService';
-import { AmplifyStorageService } from './amplifyStorageService';
-import { shouldUseAmplify } from './amplifyClient';
+import { getDataService, DataService } from './dataService';
 
 export class QRCodeService {
   private static instance: QRCodeService;
-  private storageService: StorageService;
+  private storageService: DataService;
 
   static getInstance(): QRCodeService {
     if (!QRCodeService.instance) {
@@ -15,10 +13,7 @@ export class QRCodeService {
   }
 
   constructor() {
-    // Use Amplify storage if available, otherwise fallback to local storage
-    this.storageService = shouldUseAmplify() 
-      ? AmplifyStorageService.getInstance() as any
-      : StorageService.getInstance();
+    this.storageService = getDataService();
   }
 
   async generateQRCode(waiterId: string, shiftId: string): Promise<QRCode> {

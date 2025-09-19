@@ -1,0 +1,2190 @@
+{
+ "Parameters": {
+  "DynamoDBModelTableReadIOPS": {
+   "Type": "Number",
+   "Default": 5,
+   "Description": "The number of read IOPS the table should support."
+  },
+  "DynamoDBModelTableWriteIOPS": {
+   "Type": "Number",
+   "Default": 5,
+   "Description": "The number of write IOPS the table should support."
+  },
+  "DynamoDBBillingMode": {
+   "Type": "String",
+   "Default": "PAY_PER_REQUEST",
+   "AllowedValues": [
+    "PAY_PER_REQUEST",
+    "PROVISIONED"
+   ],
+   "Description": "Configure @model types to create DynamoDB tables with PAY_PER_REQUEST or PROVISIONED billing modes."
+  },
+  "DynamoDBEnablePointInTimeRecovery": {
+   "Type": "String",
+   "Default": "false",
+   "AllowedValues": [
+    "true",
+    "false"
+   ],
+   "Description": "Whether to enable Point in Time Recovery on the table."
+  },
+  "DynamoDBEnableServerSideEncryption": {
+   "Type": "String",
+   "Default": "true",
+   "AllowedValues": [
+    "true",
+    "false"
+   ],
+   "Description": "Enable server side encryption powered by KMS."
+  },
+  "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResourceF65423DCOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDa8A8AB376": {
+   "Type": "String"
+  },
+  "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId": {
+   "Type": "String"
+  },
+  "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name": {
+   "Type": "String"
+  },
+  "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthauthenticatedUserRole97E7C1E3Ref": {
+   "Type": "String"
+  },
+  "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthunauthenticatedUserRole8BA64B86Ref": {
+   "Type": "String"
+  },
+  "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthIdentityPool26B3F380Ref": {
+   "Type": "String"
+  }
+ },
+ "Conditions": {
+  "HasEnvironmentParameter": {
+   "Fn::Not": [
+    {
+     "Fn::Equals": [
+      "NONE",
+      "NONE"
+     ]
+    }
+   ]
+  },
+  "ShouldUsePayPerRequestBilling": {
+   "Fn::Equals": [
+    {
+     "Ref": "DynamoDBBillingMode"
+    },
+    "PAY_PER_REQUEST"
+   ]
+  },
+  "ShouldUsePointInTimeRecovery": {
+   "Fn::Equals": [
+    {
+     "Ref": "DynamoDBEnablePointInTimeRecovery"
+    },
+    "true"
+   ]
+  },
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-3"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-4"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-2"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "il-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Equals": [
+      {
+       "Ref": "AWS::Region"
+      },
+      "us-west-2"
+     ]
+    }
+   ]
+  }
+ },
+ "Resources": {
+  "QRCodeTable": {
+   "Type": "Custom::AmplifyDynamoDBTable",
+   "Properties": {
+    "ServiceToken": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResourceF65423DCOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDa8A8AB376"
+    },
+    "tableName": {
+     "Fn::Join": [
+      "",
+      [
+       "QRCode-",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+       },
+       "-NONE"
+      ]
+     ]
+    },
+    "attributeDefinitions": [
+     {
+      "attributeName": "id",
+      "attributeType": "S"
+     },
+     {
+      "attributeName": "waiterId",
+      "attributeType": "S"
+     },
+     {
+      "attributeName": "shiftId",
+      "attributeType": "S"
+     }
+    ],
+    "keySchema": [
+     {
+      "attributeName": "id",
+      "keyType": "HASH"
+     }
+    ],
+    "globalSecondaryIndexes": [
+     {
+      "indexName": "gsi-User.qrCodes",
+      "keySchema": [
+       {
+        "attributeName": "waiterId",
+        "keyType": "HASH"
+       }
+      ],
+      "projection": {
+       "projectionType": "ALL"
+      },
+      "provisionedThroughput": {
+       "Fn::If": [
+        "ShouldUsePayPerRequestBilling",
+        {
+         "Ref": "AWS::NoValue"
+        },
+        {
+         "ReadCapacityUnits": {
+          "Ref": "DynamoDBModelTableReadIOPS"
+         },
+         "WriteCapacityUnits": {
+          "Ref": "DynamoDBModelTableWriteIOPS"
+         }
+        }
+       ]
+      }
+     },
+     {
+      "indexName": "gsi-Shift.qrCodes",
+      "keySchema": [
+       {
+        "attributeName": "shiftId",
+        "keyType": "HASH"
+       }
+      ],
+      "projection": {
+       "projectionType": "ALL"
+      },
+      "provisionedThroughput": {
+       "Fn::If": [
+        "ShouldUsePayPerRequestBilling",
+        {
+         "Ref": "AWS::NoValue"
+        },
+        {
+         "ReadCapacityUnits": {
+          "Ref": "DynamoDBModelTableReadIOPS"
+         },
+         "WriteCapacityUnits": {
+          "Ref": "DynamoDBModelTableWriteIOPS"
+         }
+        }
+       ]
+      }
+     }
+    ],
+    "provisionedThroughput": {
+     "Fn::If": [
+      "ShouldUsePayPerRequestBilling",
+      {
+       "Ref": "AWS::NoValue"
+      },
+      {
+       "ReadCapacityUnits": {
+        "Ref": "DynamoDBModelTableReadIOPS"
+       },
+       "WriteCapacityUnits": {
+        "Ref": "DynamoDBModelTableWriteIOPS"
+       }
+      }
+     ]
+    },
+    "sseSpecification": {
+     "sseEnabled": false
+    },
+    "streamSpecification": {
+     "streamViewType": "NEW_AND_OLD_IMAGES"
+    },
+    "deletionProtectionEnabled": false,
+    "allowDestructiveGraphqlSchemaUpdates": true,
+    "replaceTableUponGsiUpdate": true,
+    "pointInTimeRecoverySpecification": {
+     "Fn::If": [
+      "ShouldUsePointInTimeRecovery",
+      {
+       "PointInTimeRecoveryEnabled": true
+      },
+      {
+       "Ref": "AWS::NoValue"
+      }
+     ]
+    },
+    "billingMode": {
+     "Fn::If": [
+      "ShouldUsePayPerRequestBilling",
+      "PAY_PER_REQUEST",
+      {
+       "Ref": "AWS::NoValue"
+      }
+     ]
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/QRCodeTable/Default/Default"
+   }
+  },
+  "QRCodeIAMRoleCF282FFB": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "appsync.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Policies": [
+     {
+      "PolicyDocument": {
+       "Statement": [
+        {
+         "Action": [
+          "dynamodb:BatchGetItem",
+          "dynamodb:BatchWriteItem",
+          "dynamodb:PutItem",
+          "dynamodb:DeleteItem",
+          "dynamodb:GetItem",
+          "dynamodb:Scan",
+          "dynamodb:Query",
+          "dynamodb:UpdateItem",
+          "dynamodb:ConditionCheckItem",
+          "dynamodb:DescribeTable",
+          "dynamodb:GetRecords",
+          "dynamodb:GetShardIterator"
+         ],
+         "Effect": "Allow",
+         "Resource": [
+          {
+           "Fn::Sub": [
+            "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}",
+            {
+             "tablename": {
+              "Fn::Join": [
+               "",
+               [
+                "QRCode-",
+                {
+                 "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+                },
+                "-NONE"
+               ]
+              ]
+             }
+            }
+           ]
+          },
+          {
+           "Fn::Sub": [
+            "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}/*",
+            {
+             "tablename": {
+              "Fn::Join": [
+               "",
+               [
+                "QRCode-",
+                {
+                 "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+                },
+                "-NONE"
+               ]
+              ]
+             }
+            }
+           ]
+          }
+         ]
+        }
+       ],
+       "Version": "2012-10-17"
+      },
+      "PolicyName": "DynamoDBAccess"
+     }
+    ],
+    "RoleName": {
+     "Fn::Join": [
+      "",
+      [
+       "QRCodeIAMRole1931d9-",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+       },
+       "-NONE"
+      ]
+     ]
+    },
+    "Tags": [
+     {
+      "Key": "amplify:deployment-type",
+      "Value": "sandbox"
+     },
+     {
+      "Key": "amplify:friendly-name",
+      "Value": "amplifyData"
+     },
+     {
+      "Key": "created-by",
+      "Value": "amplify"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/QRCodeIAMRole/Resource"
+   }
+  },
+  "QRCodeDataSource": {
+   "Type": "AWS::AppSync::DataSource",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DynamoDBConfig": {
+     "AwsRegion": {
+      "Ref": "AWS::Region"
+     },
+     "TableName": {
+      "Fn::Select": [
+       1,
+       {
+        "Fn::Split": [
+         "/",
+         {
+          "Fn::Select": [
+           5,
+           {
+            "Fn::Split": [
+             ":",
+             {
+              "Fn::GetAtt": [
+               "QRCodeTable",
+               "TableArn"
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       }
+      ]
+     }
+    },
+    "Name": "QRCodeTable",
+    "ServiceRoleArn": {
+     "Fn::GetAtt": [
+      "QRCodeIAMRoleCF282FFB",
+      "Arn"
+     ]
+    },
+    "Type": "AMAZON_DYNAMODB"
+   },
+   "DependsOn": [
+    "QRCodeIAMRoleCF282FFB"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/QRCodeDataSource/Resource"
+   }
+  },
+  "QuerygetQRCodeauth0FunctionQuerygetQRCodeauth0FunctionAppSyncFunction68B9F00B": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerygetQRCodeauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/88d5b7081b0dc9c39fd0bffedf56f011b2a7cf1ce5cc227f47a1e94efee8067c.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/QuerygetQRCodeauth0Function/QuerygetQRCodeauth0Function.AppSyncFunction"
+   }
+  },
+  "QuerygetQRCodepostAuth0FunctionQuerygetQRCodepostAuth0FunctionAppSyncFunction4D873893": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerygetQRCodepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/QuerygetQRCodepostAuth0Function/QuerygetQRCodepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "QueryGetQRCodeDataResolverFnQueryGetQRCodeDataResolverFnAppSyncFunction5D584780": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "QRCodeDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QueryGetQRCodeDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/08f4d557693d96c1a4efba0f9dc91330e4b19772fd5477c156468843e3d9cb5e.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4c6a2d29f01c6091bd1d9afe16e5849d456c96f17c3b215938c8067399532719.vtl"
+    }
+   },
+   "DependsOn": [
+    "QRCodeDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/QueryGetQRCodeDataResolverFn/QueryGetQRCodeDataResolverFn.AppSyncFunction"
+   }
+  },
+  "GetQRCodeResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "FieldName": "getQRCode",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "QuerygetQRCodeauth0FunctionQuerygetQRCodeauth0FunctionAppSyncFunction68B9F00B",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QuerygetQRCodepostAuth0FunctionQuerygetQRCodepostAuth0FunctionAppSyncFunction4D873893",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QueryGetQRCodeDataResolverFnQueryGetQRCodeDataResolverFnAppSyncFunction5D584780",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"getQRCode\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "QRCodeTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthauthenticatedUserRole97E7C1E3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthunauthenticatedUserRole8BA64B86Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthIdentityPool26B3F380Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Query"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/queryGetQRCodeResolver"
+   }
+  },
+  "QuerylistQRCodesauth0FunctionQuerylistQRCodesauth0FunctionAppSyncFunction6A73BEF6": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerylistQRCodesauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/88d5b7081b0dc9c39fd0bffedf56f011b2a7cf1ce5cc227f47a1e94efee8067c.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/QuerylistQRCodesauth0Function/QuerylistQRCodesauth0Function.AppSyncFunction"
+   }
+  },
+  "QuerylistQRCodespostAuth0FunctionQuerylistQRCodespostAuth0FunctionAppSyncFunctionCFFC6BA2": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerylistQRCodespostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/QuerylistQRCodespostAuth0Function/QuerylistQRCodespostAuth0Function.AppSyncFunction"
+   }
+  },
+  "QueryListQRCodesDataResolverFnQueryListQRCodesDataResolverFnAppSyncFunction465C4228": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "QRCodeDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QueryListQRCodesDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/9fcbe070ecd3023c5bf5b966fa9584757db9762eef123bad0820bd87591b2174.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/cc01911d0269d4080ea57505dc445dfc315ef7ad85d3d9d4ea1357858bff451d.vtl"
+    }
+   },
+   "DependsOn": [
+    "QRCodeDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/QueryListQRCodesDataResolverFn/QueryListQRCodesDataResolverFn.AppSyncFunction"
+   }
+  },
+  "ListQRCodeResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "FieldName": "listQRCodes",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "QuerylistQRCodesauth0FunctionQuerylistQRCodesauth0FunctionAppSyncFunction6A73BEF6",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QuerylistQRCodespostAuth0FunctionQuerylistQRCodespostAuth0FunctionAppSyncFunctionCFFC6BA2",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QueryListQRCodesDataResolverFnQueryListQRCodesDataResolverFnAppSyncFunction465C4228",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"listQRCodes\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "QRCodeTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthauthenticatedUserRole97E7C1E3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthunauthenticatedUserRole8BA64B86Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthIdentityPool26B3F380Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Query"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/queryListQRCodesResolver"
+   }
+  },
+  "MutationcreateQRCodeinit0FunctionMutationcreateQRCodeinit0FunctionAppSyncFunctionE78BEC30": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreateQRCodeinit0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/a183ddccbd956316c38ef97177b8f088ef0826f62023323f5ae6053d348ccffc.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/MutationcreateQRCodeinit0Function/MutationcreateQRCodeinit0Function.AppSyncFunction"
+   }
+  },
+  "MutationcreateQRCodeinit1FunctionMutationcreateQRCodeinit1FunctionAppSyncFunction76BEF38F": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreateQRCodeinit1Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4b6b1674f109d30918a2e9e470b0e9ddc9308137b4a68b00829d0f335320592f.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/MutationcreateQRCodeinit1Function/MutationcreateQRCodeinit1Function.AppSyncFunction"
+   }
+  },
+  "MutationcreateQRCodeauth0FunctionMutationcreateQRCodeauth0FunctionAppSyncFunctionE99F328F": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreateQRCodeauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/b371d68ddfbdd11b176756ce33b2c4e79d26fcc2fd4b7c0c9e75d06efacee90e.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/MutationcreateQRCodeauth0Function/MutationcreateQRCodeauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationcreateQRCodepostAuth0FunctionMutationcreateQRCodepostAuth0FunctionAppSyncFunctionE2A52F0D": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreateQRCodepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/MutationcreateQRCodepostAuth0Function/MutationcreateQRCodepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationCreateQRCodeDataResolverFnMutationCreateQRCodeDataResolverFnAppSyncFunction5F336E69": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "QRCodeDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationCreateQRCodeDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/9f8038c6569de788fedad7010688839d8165efc5e790acd7e5bc02477fe6990a.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "QRCodeDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/MutationCreateQRCodeDataResolverFn/MutationCreateQRCodeDataResolverFn.AppSyncFunction"
+   }
+  },
+  "CreateQRCodeResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "FieldName": "createQRCode",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationcreateQRCodeinit0FunctionMutationcreateQRCodeinit0FunctionAppSyncFunctionE78BEC30",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationcreateQRCodeinit1FunctionMutationcreateQRCodeinit1FunctionAppSyncFunction76BEF38F",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationcreateQRCodeauth0FunctionMutationcreateQRCodeauth0FunctionAppSyncFunctionE99F328F",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationcreateQRCodepostAuth0FunctionMutationcreateQRCodepostAuth0FunctionAppSyncFunctionE2A52F0D",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationCreateQRCodeDataResolverFnMutationCreateQRCodeDataResolverFnAppSyncFunction5F336E69",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"createQRCode\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "QRCodeTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthauthenticatedUserRole97E7C1E3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthunauthenticatedUserRole8BA64B86Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthIdentityPool26B3F380Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/mutationCreateQRCodeResolver"
+   }
+  },
+  "MutationupdateQRCodeinit0FunctionMutationupdateQRCodeinit0FunctionAppSyncFunction4650D0B0": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdateQRCodeinit0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/06db846fd14e6fc371f22b12b5545ba8e2dbfeda85d8c8d586c71c282166657b.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/MutationupdateQRCodeinit0Function/MutationupdateQRCodeinit0Function.AppSyncFunction"
+   }
+  },
+  "MutationupdateQRCodeauth0FunctionMutationupdateQRCodeauth0FunctionAppSyncFunction3E4BA100": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "QRCodeDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdateQRCodeauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/1f5fed297da9c32ae3af922bf3a38ccf23b956078887d16891ec06c20c64722c.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/245ed8ac5185462a6923b7e45a318fec4c9ba0c45d1d720abd5b20317aa3dc6a.vtl"
+    }
+   },
+   "DependsOn": [
+    "QRCodeDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/MutationupdateQRCodeauth0Function/MutationupdateQRCodeauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationupdateQRCodepostAuth0FunctionMutationupdateQRCodepostAuth0FunctionAppSyncFunction44D5202E": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdateQRCodepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/MutationupdateQRCodepostAuth0Function/MutationupdateQRCodepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationUpdateQRCodeDataResolverFnMutationUpdateQRCodeDataResolverFnAppSyncFunction3F7A6443": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "QRCodeDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationUpdateQRCodeDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/474bf0776ec2164a13191d1a0a9e057154931e4918fea5086f49850d02a5371b.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "QRCodeDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/MutationUpdateQRCodeDataResolverFn/MutationUpdateQRCodeDataResolverFn.AppSyncFunction"
+   }
+  },
+  "UpdateQRCodeResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "FieldName": "updateQRCode",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationupdateQRCodeinit0FunctionMutationupdateQRCodeinit0FunctionAppSyncFunction4650D0B0",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationupdateQRCodeauth0FunctionMutationupdateQRCodeauth0FunctionAppSyncFunction3E4BA100",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationupdateQRCodepostAuth0FunctionMutationupdateQRCodepostAuth0FunctionAppSyncFunction44D5202E",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationUpdateQRCodeDataResolverFnMutationUpdateQRCodeDataResolverFnAppSyncFunction3F7A6443",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"updateQRCode\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "QRCodeTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthauthenticatedUserRole97E7C1E3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthunauthenticatedUserRole8BA64B86Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthIdentityPool26B3F380Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/mutationUpdateQRCodeResolver"
+   }
+  },
+  "MutationdeleteQRCodeauth0FunctionMutationdeleteQRCodeauth0FunctionAppSyncFunction2448AAB9": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "QRCodeDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationdeleteQRCodeauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/1f5fed297da9c32ae3af922bf3a38ccf23b956078887d16891ec06c20c64722c.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/29e4bdb03133f87f2b1acb547959ffd4cfd22804026994c5b61db33084127353.vtl"
+    }
+   },
+   "DependsOn": [
+    "QRCodeDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/MutationdeleteQRCodeauth0Function/MutationdeleteQRCodeauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationdeleteQRCodepostAuth0FunctionMutationdeleteQRCodepostAuth0FunctionAppSyncFunction96648097": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationdeleteQRCodepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/MutationdeleteQRCodepostAuth0Function/MutationdeleteQRCodepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationDeleteQRCodeDataResolverFnMutationDeleteQRCodeDataResolverFnAppSyncFunction974BD2E4": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "QRCodeDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationDeleteQRCodeDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4f7907d1209a2c9953a0c053df402c634e359546d70c7cc5c2e8e21ea734880f.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "QRCodeDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/MutationDeleteQRCodeDataResolverFn/MutationDeleteQRCodeDataResolverFn.AppSyncFunction"
+   }
+  },
+  "DeleteQRCodeResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "FieldName": "deleteQRCode",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationdeleteQRCodeauth0FunctionMutationdeleteQRCodeauth0FunctionAppSyncFunction2448AAB9",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationdeleteQRCodepostAuth0FunctionMutationdeleteQRCodepostAuth0FunctionAppSyncFunction96648097",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationDeleteQRCodeDataResolverFnMutationDeleteQRCodeDataResolverFnAppSyncFunction974BD2E4",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"deleteQRCode\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "QRCodeTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthauthenticatedUserRole97E7C1E3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthunauthenticatedUserRole8BA64B86Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthIdentityPool26B3F380Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/mutationDeleteQRCodeResolver"
+   }
+  },
+  "SubscriptiononCreateQRCodeauth0FunctionSubscriptiononCreateQRCodeauth0FunctionAppSyncFunctionEE9E8F1B": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononCreateQRCodeauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6f3a2a9d562ae3058cc1aed6741edbf5edcaef7b3df7b03f52478816a1c95ffb.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/SubscriptiononCreateQRCodeauth0Function/SubscriptiononCreateQRCodeauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononCreateQRCodepostAuth0FunctionSubscriptiononCreateQRCodepostAuth0FunctionAppSyncFunction9F718CC6": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononCreateQRCodepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/SubscriptiononCreateQRCodepostAuth0Function/SubscriptiononCreateQRCodepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnCreateQRCodeDataResolverFnSubscriptionOnCreateQRCodeDataResolverFnAppSyncFunctionAB78E63C": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnCreateQRCodeDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/SubscriptionOnCreateQRCodeDataResolverFn/SubscriptionOnCreateQRCodeDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononCreateQRCodeResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "FieldName": "onCreateQRCode",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononCreateQRCodeauth0FunctionSubscriptiononCreateQRCodeauth0FunctionAppSyncFunctionEE9E8F1B",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononCreateQRCodepostAuth0FunctionSubscriptiononCreateQRCodepostAuth0FunctionAppSyncFunction9F718CC6",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnCreateQRCodeDataResolverFnSubscriptionOnCreateQRCodeDataResolverFnAppSyncFunctionAB78E63C",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onCreateQRCode\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthauthenticatedUserRole97E7C1E3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthunauthenticatedUserRole8BA64B86Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthIdentityPool26B3F380Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/subscriptionOnCreateQRCodeResolver"
+   }
+  },
+  "SubscriptiononUpdateQRCodeauth0FunctionSubscriptiononUpdateQRCodeauth0FunctionAppSyncFunction6F2327B8": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononUpdateQRCodeauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6f3a2a9d562ae3058cc1aed6741edbf5edcaef7b3df7b03f52478816a1c95ffb.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/SubscriptiononUpdateQRCodeauth0Function/SubscriptiononUpdateQRCodeauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononUpdateQRCodepostAuth0FunctionSubscriptiononUpdateQRCodepostAuth0FunctionAppSyncFunctionCAE00B5D": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononUpdateQRCodepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/SubscriptiononUpdateQRCodepostAuth0Function/SubscriptiononUpdateQRCodepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnUpdateQRCodeDataResolverFnSubscriptionOnUpdateQRCodeDataResolverFnAppSyncFunction8DBBB852": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnUpdateQRCodeDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/SubscriptionOnUpdateQRCodeDataResolverFn/SubscriptionOnUpdateQRCodeDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononUpdateQRCodeResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "FieldName": "onUpdateQRCode",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononUpdateQRCodeauth0FunctionSubscriptiononUpdateQRCodeauth0FunctionAppSyncFunction6F2327B8",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononUpdateQRCodepostAuth0FunctionSubscriptiononUpdateQRCodepostAuth0FunctionAppSyncFunctionCAE00B5D",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnUpdateQRCodeDataResolverFnSubscriptionOnUpdateQRCodeDataResolverFnAppSyncFunction8DBBB852",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onUpdateQRCode\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthauthenticatedUserRole97E7C1E3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthunauthenticatedUserRole8BA64B86Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthIdentityPool26B3F380Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/subscriptionOnUpdateQRCodeResolver"
+   }
+  },
+  "SubscriptiononDeleteQRCodeauth0FunctionSubscriptiononDeleteQRCodeauth0FunctionAppSyncFunction92C1578B": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononDeleteQRCodeauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6f3a2a9d562ae3058cc1aed6741edbf5edcaef7b3df7b03f52478816a1c95ffb.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/SubscriptiononDeleteQRCodeauth0Function/SubscriptiononDeleteQRCodeauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononDeleteQRCodepostAuth0FunctionSubscriptiononDeleteQRCodepostAuth0FunctionAppSyncFunctionD7C0B0FB": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononDeleteQRCodepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/SubscriptiononDeleteQRCodepostAuth0Function/SubscriptiononDeleteQRCodepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnDeleteQRCodeDataResolverFnSubscriptionOnDeleteQRCodeDataResolverFnAppSyncFunction455455AA": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPINONEDS9A6B0493Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnDeleteQRCodeDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/SubscriptionOnDeleteQRCodeDataResolverFn/SubscriptionOnDeleteQRCodeDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononDeleteQRCodeResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+    },
+    "FieldName": "onDeleteQRCode",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononDeleteQRCodeauth0FunctionSubscriptiononDeleteQRCodeauth0FunctionAppSyncFunction92C1578B",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononDeleteQRCodepostAuth0FunctionSubscriptiononDeleteQRCodepostAuth0FunctionAppSyncFunctionD7C0B0FB",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnDeleteQRCodeDataResolverFnSubscriptionOnDeleteQRCodeDataResolverFnAppSyncFunction455455AA",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onDeleteQRCode\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthauthenticatedUserRole97E7C1E3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthunauthenticatedUserRole8BA64B86Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1authNestedStackauthNestedStackResource7B25022AOutputsamplifyhotelgamificationappafromusedigitalsandbox30353783f1authamplifyAuthIdentityPool26B3F380Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/subscriptionOnDeleteQRCodeResolver"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/1WQ0U7DMAxFv4X31EA3PoC14hFQx/vkJm6VtUmq2Bmaqv47aYeGeLo+8pV97RLK5xd4esBvLrQZitG2ML8TC5mjoB5U1flPjOhIKK5QBW+s2OBVQxxS1KSqxBLcH3b+Xuexp9lcPbpgWvjCdqQDMimLDuYmjDd31kXhNPHVa5jrzV63NQoe7yP/01vyeg2R03S2TxG3RL+bxwvFRfHuhMwkDK+rZIZD0gPJGmBZvR9JpiRqa+dje+v7RflgCM78eCn3UObHnNnaIiYv1hE0N/0BW4d8cDUBAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "amplify-hotelgamificationapp-afromusedigital-sandbox-30353783f1/data/amplifyData/QRCode/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Outputs": {
+  "GetAttQRCodeTableStreamArn": {
+   "Description": "Your DynamoDB table StreamArn.",
+   "Value": {
+    "Fn::GetAtt": [
+     "QRCodeTable",
+     "TableStreamArn"
+    ]
+   },
+   "Export": {
+    "Name": {
+     "Fn::Join": [
+      ":",
+      [
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+       },
+       "GetAtt:QRCodeTable:StreamArn"
+      ]
+     ]
+    }
+   }
+  },
+  "GetAttQRCodeTableName": {
+   "Description": "Your DynamoDB table name.",
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "QRCode-",
+      {
+       "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+      },
+      "-NONE"
+     ]
+    ]
+   },
+   "Export": {
+    "Name": {
+     "Fn::Join": [
+      ":",
+      [
+       {
+        "Ref": "referencetoamplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataGraphQLAPIA9D0758BApiId"
+       },
+       "GetAtt:QRCodeTable:Name"
+      ]
+     ]
+    }
+   }
+  },
+  "amplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataQRCodeQRCodeDataSource1C63737BName": {
+   "Value": {
+    "Fn::GetAtt": [
+     "QRCodeDataSource",
+     "Name"
+    ]
+   }
+  },
+  "amplifyhotelgamificationappafromusedigitalsandbox30353783f1dataamplifyDataQRCodeQRCodeTableB848BBF2TableArn": {
+   "Value": {
+    "Fn::GetAtt": [
+     "QRCodeTable",
+     "TableArn"
+    ]
+   }
+  }
+ }
+}

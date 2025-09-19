@@ -1,317 +1,484 @@
-// GraphQL Queries for Hotel Gamification App
-import { generateClient } from 'aws-amplify/api';
-import type { Schema } from '../../../amplify/data/resource';
+/* tslint:disable */
+/* eslint-disable */
+// this is an auto generated file. This will be overwritten
 
-const client = generateClient<Schema>();
+import * as APITypes from "./API";
+type GeneratedQuery<InputType, OutputType> = string & {
+  __generatedQueryInput: InputType;
+  __generatedQueryOutput: OutputType;
+};
 
-// Hotel Queries
-export const listHotels = /* GraphQL */ `
-  query ListHotels {
-    listHotels {
-      items {
-        id
-        name
-        address
-        timezone
-        createdAt
-        updatedAt
-      }
-    }
-  }
-`;
-
-export const getHotel = /* GraphQL */ `
-  query GetHotel($id: ID!) {
-    getHotel(id: $id) {
-      id
-      name
+export const getAnalytics = /* GraphQL */ `query GetAnalytics($id: ID!) {
+  getAnalytics(id: $id) {
+    activeWaiters
+    averageRating
+    createdAt
+    date
+    hotel {
       address
-      timezone
       createdAt
-      updatedAt
-    }
-  }
-`;
-
-// User Queries
-export const listUsers = /* GraphQL */ `
-  query ListUsers($filter: ModelUserFilterInput) {
-    listUsers(filter: $filter) {
-      items {
-        id
-        email
-        name
-        role
-        hotelId
-        points
-        level
-        totalRatings
-        averageRating
-        isActive
-        createdAt
-        updatedAt
-      }
-    }
-  }
-`;
-
-export const getUser = /* GraphQL */ `
-  query GetUser($id: ID!) {
-    getUser(id: $id) {
       id
-      email
       name
-      role
-      hotelId
-      points
-      level
-      totalRatings
-      averageRating
-      isActive
-      createdAt
+      timezone
       updatedAt
-      hotel {
-        id
-        name
-        address
-        timezone
-      }
-      badges {
-        items {
-          id
-          type
-          name
-          description
-          icon
-          earnedAt
-        }
-      }
+      __typename
     }
+    hotelId
+    id
+    metrics
+    period
+    topWaiterId
+    totalPoints
+    totalRatings
+    updatedAt
+    __typename
   }
-`;
-
-// Rating Queries
-export const listRatings = /* GraphQL */ `
-  query ListRatings($filter: ModelRatingFilterInput, $limit: Int, $nextToken: String) {
-    listRatings(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        waiterId
-        hotelId
-        rating
-        serviceRating
-        foodRating
-        ambianceRating
-        comment
-        tableNumber
-        guestName
-        timestamp
-        qrToken
-        isFlagged
-        flaggedReason
-        isResolved
-        resolvedBy
-        resolvedAt
-        resolutionNotes
-        waiter {
-          id
-          name
-          email
-        }
-      }
+}
+` as GeneratedQuery<
+  APITypes.GetAnalyticsQueryVariables,
+  APITypes.GetAnalyticsQuery
+>;
+export const getBadge = /* GraphQL */ `query GetBadge($id: ID!) {
+  getBadge(id: $id) {
+    createdAt
+    criteria
+    description
+    earnedAt
+    icon
+    id
+    name
+    type
+    updatedAt
+    waiter {
+      averageRating
+      createdAt
+      email
+      hotelId
+      id
+      isActive
+      level
+      name
+      points
+      role
+      totalRatings
+      updatedAt
+      __typename
+    }
+    waiterId
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.GetBadgeQueryVariables, APITypes.GetBadgeQuery>;
+export const getHotel = /* GraphQL */ `query GetHotel($id: ID!) {
+  getHotel(id: $id) {
+    address
+    analyticsEntries {
       nextToken
+      __typename
     }
-  }
-`;
-
-export const getRating = /* GraphQL */ `
-  query GetRating($id: ID!) {
-    getRating(id: $id) {
-      id
-      waiterId
-      hotelId
-      rating
-      serviceRating
-      foodRating
-      ambianceRating
-      comment
-      tableNumber
-      guestName
-      timestamp
-      qrToken
-      deviceInfo
-      isFlagged
-      flaggedReason
-      isResolved
-      resolvedBy
-      resolvedAt
-      resolutionNotes
-      waiter {
-        id
-        name
-        email
-      }
-      hotel {
-        id
-        name
-      }
+    createdAt
+    id
+    name
+    ratings {
+      nextToken
+      __typename
     }
-  }
-`;
-
-// QR Code Queries
-export const listQRCodes = /* GraphQL */ `
-  query ListQRCodes($filter: ModelQRCodeFilterInput) {
-    listQRCodes(filter: $filter) {
-      items {
-        id
-        waiterId
-        shiftId
-        token
-        url
-        isUsed
-        usedAt
-        expiresAt
-        createdAt
-        waiter {
-          id
-          name
-        }
-        shift {
-          id
-          startTime
-          endTime
-          isActive
-        }
-      }
+    shifts {
+      nextToken
+      __typename
     }
-  }
-`;
-
-// Shift Queries
-export const listShifts = /* GraphQL */ `
-  query ListShifts($filter: ModelShiftFilterInput) {
-    listShifts(filter: $filter) {
-      items {
-        id
-        waiterId
-        hotelId
-        startTime
-        endTime
-        isActive
-        pointsEarned
-        ratingsCount
-        averageRating
-        totalTips
-        waiter {
-          id
-          name
-        }
-      }
+    timezone
+    updatedAt
+    users {
+      nextToken
+      __typename
     }
+    __typename
   }
-`;
-
-export const getShift = /* GraphQL */ `
-  query GetShift($id: ID!) {
-    getShift(id: $id) {
-      id
-      waiterId
-      hotelId
-      startTime
+}
+` as GeneratedQuery<APITypes.GetHotelQueryVariables, APITypes.GetHotelQuery>;
+export const getQRCode = /* GraphQL */ `query GetQRCode($id: ID!) {
+  getQRCode(id: $id) {
+    createdAt
+    expiresAt
+    id
+    isUsed
+    shift {
+      averageRating
+      createdAt
       endTime
+      hotelId
+      id
       isActive
       pointsEarned
       ratingsCount
-      averageRating
+      startTime
       totalTips
-      waiter {
-        id
-        name
-        email
-      }
-      hotel {
-        id
-        name
-      }
-      qrCodes {
-        items {
-          id
-          token
-          url
-          isUsed
-          expiresAt
-        }
-      }
+      updatedAt
+      waiterId
+      __typename
     }
-  }
-`;
-
-// Badge Queries
-export const listBadges = /* GraphQL */ `
-  query ListBadges($filter: ModelBadgeFilterInput) {
-    listBadges(filter: $filter) {
-      items {
-        id
-        waiterId
-        type
-        name
-        description
-        icon
-        earnedAt
-        criteria
-        waiter {
-          id
-          name
-        }
-      }
+    shiftId
+    token
+    updatedAt
+    url
+    usedAt
+    waiter {
+      averageRating
+      createdAt
+      email
+      hotelId
+      id
+      isActive
+      level
+      name
+      points
+      role
+      totalRatings
+      updatedAt
+      __typename
     }
+    waiterId
+    __typename
   }
-`;
-
-// Analytics Queries
-export const listAnalytics = /* GraphQL */ `
-  query ListAnalytics($filter: ModelAnalyticsFilterInput) {
-    listAnalytics(filter: $filter) {
-      items {
-        id
-        hotelId
-        period
-        date
-        totalRatings
-        averageRating
-        totalPoints
-        activeWaiters
-        topWaiterId
-        metrics
-      }
+}
+` as GeneratedQuery<APITypes.GetQRCodeQueryVariables, APITypes.GetQRCodeQuery>;
+export const getRating = /* GraphQL */ `query GetRating($id: ID!) {
+  getRating(id: $id) {
+    ambianceRating
+    comment
+    createdAt
+    deviceInfo
+    flaggedReason
+    foodRating
+    guestName
+    hotel {
+      address
+      createdAt
+      id
+      name
+      timezone
+      updatedAt
+      __typename
     }
-  }
-`;
-
-// Custom Leaderboard Query
-export const getLeaderboard = /* GraphQL */ `
-  query GetLeaderboard($hotelId: ID!, $period: String!) {
-    listUsers(filter: { hotelId: { eq: $hotelId }, role: { eq: waiter } }) {
-      items {
-        id
-        name
-        email
-        points
-        level
-        totalRatings
-        averageRating
-        badges {
-          items {
-            id
-            type
-            name
-            earnedAt
-          }
-        }
-      }
+    hotelId
+    id
+    isFlagged
+    isResolved
+    qrToken
+    rating
+    resolutionNotes
+    resolvedAt
+    resolvedBy
+    serviceRating
+    tableNumber
+    timestamp
+    updatedAt
+    waiter {
+      averageRating
+      createdAt
+      email
+      hotelId
+      id
+      isActive
+      level
+      name
+      points
+      role
+      totalRatings
+      updatedAt
+      __typename
     }
+    waiterId
+    __typename
   }
-`;
-
-export { client };
+}
+` as GeneratedQuery<APITypes.GetRatingQueryVariables, APITypes.GetRatingQuery>;
+export const getShift = /* GraphQL */ `query GetShift($id: ID!) {
+  getShift(id: $id) {
+    averageRating
+    createdAt
+    endTime
+    hotel {
+      address
+      createdAt
+      id
+      name
+      timezone
+      updatedAt
+      __typename
+    }
+    hotelId
+    id
+    isActive
+    pointsEarned
+    qrCodes {
+      nextToken
+      __typename
+    }
+    ratingsCount
+    startTime
+    totalTips
+    updatedAt
+    waiter {
+      averageRating
+      createdAt
+      email
+      hotelId
+      id
+      isActive
+      level
+      name
+      points
+      role
+      totalRatings
+      updatedAt
+      __typename
+    }
+    waiterId
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.GetShiftQueryVariables, APITypes.GetShiftQuery>;
+export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
+  getUser(id: $id) {
+    averageRating
+    badges {
+      nextToken
+      __typename
+    }
+    createdAt
+    email
+    hotel {
+      address
+      createdAt
+      id
+      name
+      timezone
+      updatedAt
+      __typename
+    }
+    hotelId
+    id
+    isActive
+    level
+    name
+    points
+    qrCodes {
+      nextToken
+      __typename
+    }
+    ratings {
+      nextToken
+      __typename
+    }
+    role
+    shifts {
+      nextToken
+      __typename
+    }
+    totalRatings
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.GetUserQueryVariables, APITypes.GetUserQuery>;
+export const listAnalytics = /* GraphQL */ `query ListAnalytics(
+  $filter: ModelAnalyticsFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listAnalytics(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      activeWaiters
+      averageRating
+      createdAt
+      date
+      hotelId
+      id
+      metrics
+      period
+      topWaiterId
+      totalPoints
+      totalRatings
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListAnalyticsQueryVariables,
+  APITypes.ListAnalyticsQuery
+>;
+export const listBadges = /* GraphQL */ `query ListBadges(
+  $filter: ModelBadgeFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listBadges(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      createdAt
+      criteria
+      description
+      earnedAt
+      icon
+      id
+      name
+      type
+      updatedAt
+      waiterId
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListBadgesQueryVariables,
+  APITypes.ListBadgesQuery
+>;
+export const listHotels = /* GraphQL */ `query ListHotels(
+  $filter: ModelHotelFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listHotels(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      address
+      createdAt
+      id
+      name
+      timezone
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListHotelsQueryVariables,
+  APITypes.ListHotelsQuery
+>;
+export const listQRCodes = /* GraphQL */ `query ListQRCodes(
+  $filter: ModelQRCodeFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listQRCodes(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      createdAt
+      expiresAt
+      id
+      isUsed
+      shiftId
+      token
+      updatedAt
+      url
+      usedAt
+      waiterId
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListQRCodesQueryVariables,
+  APITypes.ListQRCodesQuery
+>;
+export const listRatings = /* GraphQL */ `query ListRatings(
+  $filter: ModelRatingFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listRatings(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      ambianceRating
+      comment
+      createdAt
+      deviceInfo
+      flaggedReason
+      foodRating
+      guestName
+      hotelId
+      id
+      isFlagged
+      isResolved
+      qrToken
+      rating
+      resolutionNotes
+      resolvedAt
+      resolvedBy
+      serviceRating
+      tableNumber
+      timestamp
+      updatedAt
+      waiterId
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListRatingsQueryVariables,
+  APITypes.ListRatingsQuery
+>;
+export const listShifts = /* GraphQL */ `query ListShifts(
+  $filter: ModelShiftFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listShifts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      averageRating
+      createdAt
+      endTime
+      hotelId
+      id
+      isActive
+      pointsEarned
+      ratingsCount
+      startTime
+      totalTips
+      updatedAt
+      waiterId
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListShiftsQueryVariables,
+  APITypes.ListShiftsQuery
+>;
+export const listUsers = /* GraphQL */ `query ListUsers(
+  $filter: ModelUserFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      averageRating
+      createdAt
+      email
+      hotelId
+      id
+      isActive
+      level
+      name
+      points
+      role
+      totalRatings
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.ListUsersQueryVariables, APITypes.ListUsersQuery>;

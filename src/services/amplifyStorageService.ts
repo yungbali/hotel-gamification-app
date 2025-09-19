@@ -1,533 +1,266 @@
-import { generateClient } from 'aws-amplify/api';
-import type { Schema } from '../../amplify/data/resource';
-import { shouldUseAmplify, isAmplifyConfigured } from './amplifyClient';
+import { generateClient, GraphQLResult } from 'aws-amplify/api-graphql';
 import { StorageService } from './storageService';
-import { 
-  User, Hotel, QRCode, Rating, Shift, Badge, 
-  Leaderboard, LeaderboardEntry, Analytics 
-} from '../types';
-import {
-  listUsers, getUser, listRatings, getRating, listQRCodes,
-  listShifts, getShift, listBadges, listHotels, getHotel
-} from './graphql/queries';
-import {
-  createUser, updateUser, createRating, updateRating, deleteRating,
-  createQRCode, updateQRCode, createShift, updateShift,
-  createBadge, createHotel, updateHotel
-} from './graphql/mutations';
+import type { User, Rating, QRCode, Shift } from '../types';
+import * as APITypes from './graphql/API';
+import { getUser, getQRCode, listUsers, listRatings, listQRCodes, listShifts } from './graphql/queries';
+import { createUser, updateUser, createRating, createQRCode, updateQRCode, createShift } from './graphql/mutations';
 
-export class AmplifyStorageService {
-  private static instance: AmplifyStorageService;
-  private localStorageService: StorageService;
-  private client: ReturnType<typeof generateClient<Schema>> | null = null;
+const client = generateClient();
 
-  static getInstance(): AmplifyStorageService {
-    if (!AmplifyStorageService.instance) {
-      AmplifyStorageService.instance = new AmplifyStorageService();
-    }
-    return AmplifyStorageService.instance;
+/**
+ * Amplify-aware storage service. It first tries to persist/fetch data via AppSync
+ * and falls back to the local StorageService implementation if anything fails.
+ */
+export class AmplifyStorageService extends StorageService {
+  private static amplifyInstance: AmplifyStorageService;
+  private fallback = StorageService.getInstance();
+
+  private constructor() {
+    super();
   }
 
-  constructor() {
-    this.localStorageService = StorageService.getInstance();
-    if (isAmplifyConfigured()) {
-      this.client = generateClient<Schema>();
+  static override getInstance(): AmplifyStorageService {
+    if (!AmplifyStorageService.amplifyInstance) {
+      AmplifyStorageService.amplifyInstance = new AmplifyStorageService();
+    }
+    return AmplifyStorageService.amplifyInstance;
+  }
+
+  private async withFallback<T>(operation: () => Promise<T>, fallback: () => Promise<T>): Promise<T> {
+    try {
+      return await operation();
+    } catch (error) {
+      console.warn('[AmplifyStorageService] falling back to local storage:', error);
+      return fallback();
     }
   }
 
-  private async executeWithFallback<T>(
-    amplifyOperation: () => Promise<T>,
-    localOperation: () => Promise<T>
-  ): Promise<T> {
-    if (shouldUseAmplify() && this.client) {
+  // Helpers to map API responses into local models
+  private mapUser(item: APITypes.User | null | undefined): User | null {
+    if (!item) return null;
+    return {
+      id: item.id,
+      name: item.name ?? '',
+      email: item.email ?? '',
+      role: (item.role ?? 'waiter') as User['role'],
+      hotelId: item.hotelId ?? 'default_hotel',
+      avatar: undefined,
+      isActive: item.isActive ?? true,
+      createdAt: item.createdAt ? new Date(item.createdAt) : new Date(),
+      updatedAt: item.updatedAt ? new Date(item.updatedAt) : undefined,
+    };
+  }
+
+  private mapRating(item: APITypes.Rating | null | undefined): Rating | null {
+    if (!item) return null;
+    let parsedLocation: Rating['location'];
+    if (item.deviceInfo) {
       try {
-        return await amplifyOperation();
+        parsedLocation = JSON.parse(item.deviceInfo);
       } catch (error) {
-        console.warn('Amplify operation failed, falling back to local storage:', error);
-        return await localOperation();
+        parsedLocation = undefined;
       }
     }
-    return await localOperation();
+
+    return {
+      id: item.id,
+      waiterId: item.waiterId,
+      guestId: item.guestName || `guest-${item.id}`,
+      qrToken: item.qrToken ?? '',
+      rating: item.rating ?? 0,
+      comment: item.comment ?? undefined,
+      tableNumber: item.tableNumber ?? undefined,
+      timestamp: item.timestamp ? new Date(item.timestamp) : new Date(),
+       hotelId: item.hotelId,
+      isVerified: true,
+      isFlagged: item.isFlagged ?? false,
+      location: parsedLocation,
+      flagReason: item.flaggedReason ?? undefined,
+      resolvedAt: item.resolvedAt ? new Date(item.resolvedAt) : undefined,
+      resolvedBy: item.resolvedBy ?? undefined,
+      resolutionNotes: item.resolutionNotes ?? undefined,
+    };
   }
 
-  // User Management
-  async storeUser(user: User): Promise<void> {
-    return this.executeWithFallback(
-      async () => {
-        if (!this.client) throw new Error('Amplify not configured');
-        
-        const existingUser = await this.client.graphql({
-          query: getUser,
-          variables: { id: user.id }
-        });
-
-        if (existingUser.data.getUser) {
-          await this.client.graphql({
-            query: updateUser,
-            variables: {
-              input: {
-                id: user.id,
-                email: user.email,
-                name: user.name,
-                role: user.role,
-                hotelId: user.hotelId,
-                points: user.points,
-                level: user.level,
-                totalRatings: user.totalRatings,
-                averageRating: user.averageRating,
-                isActive: user.isActive,
-              }
-            }
-          });
-        } else {
-          await this.client.graphql({
-            query: createUser,
-            variables: {
-              input: {
-                id: user.id,
-                email: user.email,
-                name: user.name,
-                role: user.role,
-                hotelId: user.hotelId,
-                points: user.points || 0,
-                level: user.level || 1,
-                totalRatings: user.totalRatings || 0,
-                averageRating: user.averageRating || 0,
-                isActive: user.isActive !== false,
-              }
-            }
-          });
-        }
-      },
-      () => this.localStorageService.storeUser(user)
-    );
+  private mapQRCode(item: APITypes.QRCode | null | undefined): QRCode | null {
+    if (!item) return null;
+    return {
+      id: item.id,
+      waiterId: item.waiterId,
+      shiftId: item.shiftId,
+      token: item.token,
+      url: item.url,
+      isUsed: item.isUsed ?? false,
+      createdAt: item.createdAt ? new Date(item.createdAt) : new Date(),
+      expiresAt: item.expiresAt ? new Date(item.expiresAt) : new Date(),
+    };
   }
 
-  async getUsers(): Promise<User[]> {
-    return this.executeWithFallback(
-      async () => {
-        if (!this.client) throw new Error('Amplify not configured');
-        
-        const result = await this.client.graphql({
-          query: listUsers
-        });
-        
-        return result.data.listUsers.items.map(item => ({
-          id: item.id,
-          email: item.email,
-          name: item.name,
-          role: item.role as 'waiter' | 'manager' | 'admin',
-          hotelId: item.hotelId,
-          points: item.points || 0,
-          level: item.level || 1,
-          totalRatings: item.totalRatings || 0,
-          averageRating: item.averageRating || 0,
-          isActive: item.isActive !== false,
-          createdAt: new Date(item.createdAt),
-          updatedAt: new Date(item.updatedAt),
-        }));
-      },
-      () => this.localStorageService.getUsers()
-    );
+  private mapShift(item: APITypes.Shift | null | undefined): Shift | null {
+    if (!item) return null;
+    return {
+      id: item.id,
+      waiterId: item.waiterId,
+      startTime: item.startTime ? new Date(item.startTime) : new Date(),
+      endTime: item.endTime ? new Date(item.endTime) : undefined,
+      isActive: item.isActive ?? true,
+      pointsEarned: item.pointsEarned ?? 0,
+      ratingsCount: item.ratingsCount ?? 0,
+      averageRating: item.averageRating ?? 0,
+      hotelId: item.hotelId ?? 'default_hotel',
+    };
   }
 
-  async getUserById(userId: string): Promise<User | null> {
-    return this.executeWithFallback(
-      async () => {
-        if (!this.client) throw new Error('Amplify not configured');
-        
-        const result = await this.client.graphql({
-          query: getUser,
-          variables: { id: userId }
-        });
-        
-        const item = result.data.getUser;
-        if (!item) return null;
-        
-        return {
-          id: item.id,
-          email: item.email,
-          name: item.name,
-          role: item.role as 'waiter' | 'manager' | 'admin',
-          hotelId: item.hotelId,
-          points: item.points || 0,
-          level: item.level || 1,
-          totalRatings: item.totalRatings || 0,
-          averageRating: item.averageRating || 0,
-          isActive: item.isActive !== false,
-          createdAt: new Date(item.createdAt),
-          updatedAt: new Date(item.updatedAt),
-        };
-      },
-      () => this.localStorageService.getUserById(userId)
-    );
+  override async storeUser(user: User): Promise<void> {
+    await this.withFallback(async () => {
+      const existing = await client.graphql({
+        query: getUser,
+        variables: { id: user.id },
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+      }) as GraphQLResult<APITypes.GetUserQuery>;
+
+      const input = {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        hotelId: user.hotelId,
+        isActive: user.isActive,
+      };
+
+      if (existing.data?.getUser) {
+        await client.graphql({ query: updateUser, variables: { input }, authMode: 'AMAZON_COGNITO_USER_POOLS' });
+      } else {
+        await client.graphql({ query: createUser, variables: { input }, authMode: 'AMAZON_COGNITO_USER_POOLS' });
+      }
+    }, () => super.storeUser(user));
+
+    await super.storeUser(user);
   }
 
-  // Rating Management
-  async storeRating(rating: Rating): Promise<void> {
-    return this.executeWithFallback(
-      async () => {
-        if (!this.client) throw new Error('Amplify not configured');
-        
-        await this.client.graphql({
-          query: createRating,
-          variables: {
-            input: {
-              id: rating.id,
-              waiterId: rating.waiterId,
-              hotelId: rating.hotelId,
-              rating: rating.rating,
-              serviceRating: rating.serviceRating,
-              foodRating: rating.foodRating,
-              ambianceRating: rating.ambianceRating,
-              comment: rating.comment,
-              tableNumber: rating.tableNumber,
-              guestName: rating.guestName,
-              timestamp: rating.timestamp.toISOString(),
-              qrToken: rating.qrToken,
-              deviceInfo: rating.deviceInfo ? JSON.stringify(rating.deviceInfo) : undefined,
-              isFlagged: rating.isFlagged || false,
-              flaggedReason: rating.flaggedReason,
-              isResolved: rating.isResolved || false,
-              resolvedBy: rating.resolvedBy,
-              resolvedAt: rating.resolvedAt?.toISOString(),
-              resolutionNotes: rating.resolutionNotes,
-            }
-          }
-        });
-        
-        // Update waiter stats
-        await this.updateWaiterStats(rating.waiterId);
-      },
-      () => this.localStorageService.storeRating(rating)
-    );
+  override async getUsers(): Promise<User[]> {
+    return this.withFallback(async () => {
+      const result = await client.graphql({ query: listUsers, authMode: 'AMAZON_COGNITO_USER_POOLS' }) as GraphQLResult<APITypes.ListUsersQuery>;
+      const items = result.data?.listUsers?.items ?? [];
+      return items
+        .map(item => this.mapUser(item))
+        .filter((item): item is User => Boolean(item));
+    }, () => super.getUsers());
   }
 
-  async getRatings(): Promise<Rating[]> {
-    return this.executeWithFallback(
-      async () => {
-        if (!this.client) throw new Error('Amplify not configured');
-        
-        const result = await this.client.graphql({
-          query: listRatings
-        });
-        
-        return result.data.listRatings.items.map(item => ({
-          id: item.id,
-          waiterId: item.waiterId,
-          hotelId: item.hotelId,
-          rating: item.rating,
-          serviceRating: item.serviceRating,
-          foodRating: item.foodRating,
-          ambianceRating: item.ambianceRating,
-          comment: item.comment,
-          tableNumber: item.tableNumber,
-          guestName: item.guestName,
-          timestamp: new Date(item.timestamp),
-          qrToken: item.qrToken,
-          deviceInfo: item.deviceInfo ? JSON.parse(item.deviceInfo as string) : undefined,
-          isFlagged: item.isFlagged || false,
-          flaggedReason: item.flaggedReason,
-          isResolved: item.isResolved || false,
-          resolvedBy: item.resolvedBy,
-          resolvedAt: item.resolvedAt ? new Date(item.resolvedAt) : undefined,
-          resolutionNotes: item.resolutionNotes,
-        }));
-      },
-      () => this.localStorageService.getRatings()
-    );
+  override async storeRating(rating: Rating): Promise<void> {
+    await this.withFallback(async () => {
+      const hotel = await super.getCurrentHotel();
+      const hotelId = rating.hotelId ?? hotel?.id ?? 'default_hotel';
+
+      await client.graphql({
+        query: createRating,
+        variables: {
+          input: {
+            id: rating.id,
+            waiterId: rating.waiterId,
+            hotelId,
+            rating: rating.rating,
+            comment: rating.comment,
+            tableNumber: rating.tableNumber,
+            guestName: rating.guestId,
+            timestamp: rating.timestamp.toISOString(),
+            qrToken: rating.qrToken,
+            isFlagged: rating.isFlagged,
+            location: rating.location as any,
+            resolutionNotes: rating.resolutionNotes,
+            resolvedAt: rating.resolvedAt?.toISOString(),
+            resolvedBy: rating.resolvedBy,
+          },
+        },
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+      });
+    }, () => super.storeRating(rating));
+
+    await super.storeRating(rating);
   }
 
-  async deleteRating(ratingId: string): Promise<void> {
-    return this.executeWithFallback(
-      async () => {
-        if (!this.client) throw new Error('Amplify not configured');
-        
-        const rating = await this.getRatingById(ratingId);
-        if (rating) {
-          await this.client.graphql({
-            query: deleteRating,
-            variables: {
-              input: { id: ratingId }
-            }
-          });
-          
-          // Update waiter stats
-          await this.updateWaiterStats(rating.waiterId);
-        }
-      },
-      () => this.localStorageService.deleteRating(ratingId)
-    );
+  override async getRatings(): Promise<Rating[]> {
+    return this.withFallback(async () => {
+      const result = await client.graphql({ query: listRatings, authMode: 'AMAZON_COGNITO_USER_POOLS' }) as GraphQLResult<APITypes.ListRatingsQuery>;
+      const items = result.data?.listRatings?.items ?? [];
+      return items
+        .map(item => this.mapRating(item))
+        .filter((item): item is Rating => Boolean(item));
+    }, () => super.getRatings());
   }
 
-  async getRatingById(ratingId: string): Promise<Rating | null> {
-    return this.executeWithFallback(
-      async () => {
-        if (!this.client) throw new Error('Amplify not configured');
-        
-        const result = await this.client.graphql({
-          query: getRating,
-          variables: { id: ratingId }
-        });
-        
-        const item = result.data.getRating;
-        if (!item) return null;
-        
-        return {
-          id: item.id,
-          waiterId: item.waiterId,
-          hotelId: item.hotelId,
-          rating: item.rating,
-          serviceRating: item.serviceRating,
-          foodRating: item.foodRating,
-          ambianceRating: item.ambianceRating,
-          comment: item.comment,
-          tableNumber: item.tableNumber,
-          guestName: item.guestName,
-          timestamp: new Date(item.timestamp),
-          qrToken: item.qrToken,
-          deviceInfo: item.deviceInfo ? JSON.parse(item.deviceInfo as string) : undefined,
-          isFlagged: item.isFlagged || false,
-          flaggedReason: item.flaggedReason,
-          isResolved: item.isResolved || false,
-          resolvedBy: item.resolvedBy,
-          resolvedAt: item.resolvedAt ? new Date(item.resolvedAt) : undefined,
-          resolutionNotes: item.resolutionNotes,
-        };
-      },
-      () => this.localStorageService.getRatingById(ratingId)
-    );
+  override async storeQRCode(qrCode: QRCode): Promise<void> {
+    await this.withFallback(async () => {
+      const existing = await client.graphql({
+        query: getQRCode,
+        variables: { id: qrCode.id },
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+      }) as GraphQLResult<APITypes.GetQRCodeQuery>;
+
+      const input = {
+        id: qrCode.id,
+        waiterId: qrCode.waiterId,
+        shiftId: qrCode.shiftId,
+        token: qrCode.token,
+        url: qrCode.url,
+        isUsed: qrCode.isUsed,
+        createdAt: qrCode.createdAt.toISOString(),
+        expiresAt: qrCode.expiresAt.toISOString(),
+      };
+
+      if (existing.data?.getQRCode) {
+        await client.graphql({ query: updateQRCode, variables: { input }, authMode: 'AMAZON_COGNITO_USER_POOLS' });
+      } else {
+        await client.graphql({ query: createQRCode, variables: { input }, authMode: 'AMAZON_COGNITO_USER_POOLS' });
+      }
+    }, () => super.storeQRCode(qrCode));
+
+    await super.storeQRCode(qrCode);
   }
 
-  // QR Code Management
-  async storeQRCode(qrCode: QRCode): Promise<void> {
-    return this.executeWithFallback(
-      async () => {
-        if (!this.client) throw new Error('Amplify not configured');
-        
-        await this.client.graphql({
-          query: createQRCode,
-          variables: {
-            input: {
-              id: qrCode.id,
-              waiterId: qrCode.waiterId,
-              shiftId: qrCode.shiftId,
-              token: qrCode.token,
-              url: qrCode.url,
-              isUsed: qrCode.isUsed || false,
-              usedAt: qrCode.usedAt?.toISOString(),
-              expiresAt: qrCode.expiresAt.toISOString(),
-            }
-          }
-        });
-      },
-      () => this.localStorageService.storeQRCode(qrCode)
-    );
+  override async getQRCodes(): Promise<QRCode[]> {
+    return this.withFallback(async () => {
+      const result = await client.graphql({ query: listQRCodes, authMode: 'AMAZON_COGNITO_USER_POOLS' }) as GraphQLResult<APITypes.ListQRCodesQuery>;
+      const items = result.data?.listQRCodes?.items ?? [];
+      return items.map(item => this.mapQRCode(item)!).filter((item): item is QRCode => Boolean(item));
+    }, () => super.getQRCodes());
   }
 
-  async getQRCodes(): Promise<QRCode[]> {
-    return this.executeWithFallback(
-      async () => {
-        if (!this.client) throw new Error('Amplify not configured');
-        
-        const result = await this.client.graphql({
-          query: listQRCodes
-        });
-        
-        return result.data.listQRCodes.items.map(item => ({
-          id: item.id,
-          waiterId: item.waiterId,
-          shiftId: item.shiftId,
-          token: item.token,
-          url: item.url,
-          isUsed: item.isUsed || false,
-          usedAt: item.usedAt ? new Date(item.usedAt) : undefined,
-          expiresAt: new Date(item.expiresAt),
-          createdAt: new Date(item.createdAt),
-        }));
-      },
-      () => this.localStorageService.getQRCodes()
-    );
+  override async getShifts(): Promise<Shift[]> {
+    return this.withFallback(async () => {
+      const result = await client.graphql({ query: listShifts, authMode: 'AMAZON_COGNITO_USER_POOLS' }) as GraphQLResult<APITypes.ListShiftsQuery>;
+      const items = result.data?.listShifts?.items ?? [];
+      return items
+        .map(item => this.mapShift(item))
+        .filter((item): item is Shift => Boolean(item));
+    }, () => super.getShifts());
   }
 
-  // Shift Management
-  async storeShift(shift: Shift): Promise<void> {
-    return this.executeWithFallback(
-      async () => {
-        if (!this.client) throw new Error('Amplify not configured');
-        
-        const existingShift = await this.client.graphql({
-          query: getShift,
-          variables: { id: shift.id }
-        });
+  override async storeShift(shift: Shift): Promise<void> {
+    await this.withFallback(async () => {
+      const hotel = await super.getCurrentHotel();
+      const hotelId = shift.hotelId ?? hotel?.id ?? 'default_hotel';
 
-        if (existingShift.data.getShift) {
-          await this.client.graphql({
-            query: updateShift,
-            variables: {
-              input: {
-                id: shift.id,
-                waiterId: shift.waiterId,
-                hotelId: shift.hotelId,
-                startTime: shift.startTime.toISOString(),
-                endTime: shift.endTime?.toISOString(),
-                isActive: shift.isActive !== false,
-                pointsEarned: shift.pointsEarned || 0,
-                ratingsCount: shift.ratingsCount || 0,
-                averageRating: shift.averageRating || 0,
-                totalTips: shift.totalTips || 0,
-              }
-            }
-          });
-        } else {
-          await this.client.graphql({
-            query: createShift,
-            variables: {
-              input: {
-                id: shift.id,
-                waiterId: shift.waiterId,
-                hotelId: shift.hotelId,
-                startTime: shift.startTime.toISOString(),
-                endTime: shift.endTime?.toISOString(),
-                isActive: shift.isActive !== false,
-                pointsEarned: shift.pointsEarned || 0,
-                ratingsCount: shift.ratingsCount || 0,
-                averageRating: shift.averageRating || 0,
-                totalTips: shift.totalTips || 0,
-              }
-            }
-          });
-        }
-      },
-      () => this.localStorageService.storeShift(shift)
-    );
-  }
+      await client.graphql({
+        query: createShift,
+        variables: {
+          input: {
+            id: shift.id,
+            waiterId: shift.waiterId,
+            hotelId,
+            startTime: shift.startTime.toISOString(),
+            endTime: shift.endTime?.toISOString(),
+            isActive: shift.isActive,
+            pointsEarned: shift.pointsEarned,
+            ratingsCount: shift.ratingsCount,
+            averageRating: shift.averageRating,
+          },
+        },
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+      });
+    }, () => super.storeShift(shift));
 
-  async getShifts(): Promise<Shift[]> {
-    return this.executeWithFallback(
-      async () => {
-        if (!this.client) throw new Error('Amplify not configured');
-        
-        const result = await this.client.graphql({
-          query: listShifts
-        });
-        
-        return result.data.listShifts.items.map(item => ({
-          id: item.id,
-          waiterId: item.waiterId,
-          hotelId: item.hotelId,
-          startTime: new Date(item.startTime),
-          endTime: item.endTime ? new Date(item.endTime) : undefined,
-          isActive: item.isActive !== false,
-          pointsEarned: item.pointsEarned || 0,
-          ratingsCount: item.ratingsCount || 0,
-          averageRating: item.averageRating || 0,
-          totalTips: item.totalTips || 0,
-        }));
-      },
-      () => this.localStorageService.getShifts()
-    );
-  }
-
-  // Helper Methods
-  async updateWaiterStats(waiterId: string): Promise<void> {
-    return this.executeWithFallback(
-      async () => {
-        // For Amplify, we can use custom resolvers or Lambda functions
-        // For now, delegate to local storage service
-        return await this.localStorageService.updateWaiterStats(waiterId);
-      },
-      () => this.localStorageService.updateWaiterStats(waiterId)
-    );
-  }
-
-  async calculateLeaderboard(type: 'weekly' | 'monthly' | 'all-time' = 'weekly'): Promise<Leaderboard> {
-    return this.executeWithFallback(
-      async () => {
-        // For Amplify, we can implement custom resolvers
-        // For now, delegate to local storage service
-        return await this.localStorageService.calculateLeaderboard(type);
-      },
-      () => this.localStorageService.calculateLeaderboard(type)
-    );
-  }
-
-  // Delegate other methods to local storage service
-  async initializeDemoData(): Promise<void> {
-    return this.localStorageService.initializeDemoData();
-  }
-
-  async getQRCodeByToken(token: string): Promise<QRCode | null> {
-    return this.executeWithFallback(
-      async () => {
-        const qrCodes = await this.getQRCodes();
-        return qrCodes.find(qr => qr.token === token) || null;
-      },
-      () => this.localStorageService.getQRCodeByToken(token)
-    );
-  }
-
-  async getActiveQRCodeByWaiter(waiterId: string): Promise<QRCode | null> {
-    return this.executeWithFallback(
-      async () => {
-        const qrCodes = await this.getQRCodes();
-        return qrCodes.find(qr => 
-          qr.waiterId === waiterId && 
-          !qr.isUsed && 
-          new Date(qr.expiresAt) > new Date()
-        ) || null;
-      },
-      () => this.localStorageService.getActiveQRCodeByWaiter(waiterId)
-    );
-  }
-
-  async getActiveShiftByWaiter(waiterId: string): Promise<Shift | null> {
-    return this.executeWithFallback(
-      async () => {
-        const shifts = await this.getShifts();
-        return shifts.find(s => s.waiterId === waiterId && s.isActive) || null;
-      },
-      () => this.localStorageService.getActiveShiftByWaiter(waiterId)
-    );
-  }
-
-  async endShift(shiftId: string): Promise<void> {
-    return this.executeWithFallback(
-      async () => {
-        const shifts = await this.getShifts();
-        const shift = shifts.find(s => s.id === shiftId);
-        if (shift) {
-          shift.isActive = false;
-          shift.endTime = new Date();
-          await this.storeShift(shift);
-        }
-      },
-      () => this.localStorageService.endShift(shiftId)
-    );
-  }
-
-  // Passthrough methods for compatibility
-  async clearUser(): Promise<void> {
-    return this.localStorageService.clearUser();
-  }
-
-  async setCurrentUser(user: User): Promise<void> {
-    return this.localStorageService.setCurrentUser(user);
-  }
-
-  async getCurrentUser(): Promise<User | null> {
-    return this.localStorageService.getCurrentUser();
-  }
-
-  async setCurrentHotel(hotel: Hotel): Promise<void> {
-    return this.localStorageService.setCurrentHotel(hotel);
-  }
-
-  async getCurrentHotel(): Promise<Hotel | null> {
-    return this.localStorageService.getCurrentHotel();
-  }
-
-  async getBadgesByWaiter(waiterId: string): Promise<Badge[]> {
-    return this.localStorageService.getBadgesByWaiter(waiterId);
+    await super.storeShift(shift);
   }
 }

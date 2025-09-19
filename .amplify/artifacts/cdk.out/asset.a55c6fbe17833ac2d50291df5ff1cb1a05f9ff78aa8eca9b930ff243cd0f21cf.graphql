@@ -1,0 +1,990 @@
+type Hotel @aws_iam @aws_cognito_user_pools {
+  name: String!
+  address: String
+  timezone: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+  users(filter: ModelUserFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelUserConnection
+  ratings(filter: ModelRatingFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelRatingConnection
+  shifts(filter: ModelShiftFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelShiftConnection
+  analyticsEntries(filter: ModelAnalyticsFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelAnalyticsConnection
+  id: ID!
+}
+
+type User @aws_iam @aws_cognito_user_pools {
+  email: String!
+  name: String!
+  role: UserRole
+  hotelId: ID
+  points: Int
+  level: Int
+  totalRatings: Int
+  averageRating: Float
+  isActive: Boolean
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+  hotel: Hotel
+  shifts(filter: ModelShiftFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelShiftConnection
+  ratings(filter: ModelRatingFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelRatingConnection
+  badges(filter: ModelBadgeFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelBadgeConnection
+  qrCodes(filter: ModelQRCodeFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelQRCodeConnection
+  id: ID!
+}
+
+type Rating @aws_iam @aws_cognito_user_pools {
+  waiterId: ID!
+  hotelId: ID!
+  rating: Int!
+  serviceRating: Int
+  foodRating: Int
+  ambianceRating: Int
+  comment: String
+  tableNumber: String
+  guestName: String
+  timestamp: AWSDateTime!
+  qrToken: String
+  deviceInfo: AWSJSON
+  isFlagged: Boolean
+  flaggedReason: String
+  isResolved: Boolean
+  resolvedBy: ID
+  resolvedAt: AWSDateTime
+  resolutionNotes: String
+  waiter: User
+  hotel: Hotel
+  id: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type QRCode @aws_iam @aws_cognito_user_pools {
+  waiterId: ID!
+  shiftId: ID!
+  token: String!
+  url: String!
+  isUsed: Boolean
+  usedAt: AWSDateTime
+  expiresAt: AWSDateTime!
+  createdAt: AWSDateTime
+  waiter: User
+  shift: Shift
+  id: ID!
+  updatedAt: AWSDateTime!
+}
+
+type Shift @aws_iam @aws_cognito_user_pools {
+  waiterId: ID!
+  hotelId: ID!
+  startTime: AWSDateTime!
+  endTime: AWSDateTime
+  isActive: Boolean
+  pointsEarned: Int
+  ratingsCount: Int
+  averageRating: Float
+  totalTips: Float
+  waiter: User
+  hotel: Hotel
+  qrCodes(filter: ModelQRCodeFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelQRCodeConnection
+  id: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Badge @aws_iam @aws_cognito_user_pools {
+  waiterId: ID!
+  type: BadgeType
+  name: String!
+  description: String
+  icon: String
+  earnedAt: AWSDateTime!
+  criteria: AWSJSON
+  waiter: User
+  id: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Analytics @aws_iam @aws_cognito_user_pools {
+  hotelId: ID!
+  period: AnalyticsPeriod
+  date: AWSDate!
+  totalRatings: Int
+  averageRating: Float
+  totalPoints: Int
+  activeWaiters: Int
+  topWaiterId: ID
+  metrics: AWSJSON
+  hotel: Hotel
+  id: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+enum UserRole {
+  waiter
+  manager
+  admin
+}
+
+enum BadgeType {
+  service_star
+  customer_favorite
+  team_player
+  rising_star
+  efficiency_expert
+}
+
+enum AnalyticsPeriod {
+  daily
+  weekly
+  monthly
+}
+
+input AmplifyAIConversationTurnErrorInput {
+  errorType: String!
+  message: String!
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelSubscriptionStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  in: [String]
+  notIn: [String]
+}
+
+input ModelSubscriptionIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  in: [Int]
+  notIn: [Int]
+}
+
+input ModelSubscriptionFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  in: [Float]
+  notIn: [Float]
+}
+
+input ModelSubscriptionBooleanInput {
+  ne: Boolean
+  eq: Boolean
+}
+
+input ModelSubscriptionIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  in: [ID]
+  notIn: [ID]
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelHotelConnection @aws_iam @aws_cognito_user_pools {
+  items: [Hotel]!
+  nextToken: String
+}
+
+input ModelHotelFilterInput {
+  name: ModelStringInput
+  address: ModelStringInput
+  timezone: ModelStringInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  id: ModelIDInput
+  and: [ModelHotelFilterInput]
+  or: [ModelHotelFilterInput]
+  not: ModelHotelFilterInput
+}
+
+type Query {
+  getHotel(id: ID!): Hotel @aws_iam @aws_cognito_user_pools
+  listHotels(filter: ModelHotelFilterInput, limit: Int, nextToken: String): ModelHotelConnection @aws_iam @aws_cognito_user_pools
+  getUser(id: ID!): User @aws_iam @aws_cognito_user_pools
+  listUsers(filter: ModelUserFilterInput, limit: Int, nextToken: String): ModelUserConnection @aws_iam @aws_cognito_user_pools
+  getRating(id: ID!): Rating @aws_iam @aws_cognito_user_pools
+  listRatings(filter: ModelRatingFilterInput, limit: Int, nextToken: String): ModelRatingConnection @aws_iam @aws_cognito_user_pools
+  getQRCode(id: ID!): QRCode @aws_iam @aws_cognito_user_pools
+  listQRCodes(filter: ModelQRCodeFilterInput, limit: Int, nextToken: String): ModelQRCodeConnection @aws_iam @aws_cognito_user_pools
+  getShift(id: ID!): Shift @aws_iam @aws_cognito_user_pools
+  listShifts(filter: ModelShiftFilterInput, limit: Int, nextToken: String): ModelShiftConnection @aws_iam @aws_cognito_user_pools
+  getBadge(id: ID!): Badge @aws_iam @aws_cognito_user_pools
+  listBadges(filter: ModelBadgeFilterInput, limit: Int, nextToken: String): ModelBadgeConnection @aws_iam @aws_cognito_user_pools
+  getAnalytics(id: ID!): Analytics @aws_iam @aws_cognito_user_pools
+  listAnalytics(filter: ModelAnalyticsFilterInput, limit: Int, nextToken: String): ModelAnalyticsConnection @aws_iam @aws_cognito_user_pools
+}
+
+input ModelHotelConditionInput {
+  name: ModelStringInput
+  address: ModelStringInput
+  timezone: ModelStringInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelHotelConditionInput]
+  or: [ModelHotelConditionInput]
+  not: ModelHotelConditionInput
+}
+
+input CreateHotelInput {
+  name: String!
+  address: String
+  timezone: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+  id: ID
+}
+
+input UpdateHotelInput {
+  name: String
+  address: String
+  timezone: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+  id: ID!
+}
+
+input DeleteHotelInput {
+  id: ID!
+}
+
+type Mutation {
+  createHotel(input: CreateHotelInput!, condition: ModelHotelConditionInput): Hotel @aws_iam @aws_cognito_user_pools
+  updateHotel(input: UpdateHotelInput!, condition: ModelHotelConditionInput): Hotel @aws_iam @aws_cognito_user_pools
+  deleteHotel(input: DeleteHotelInput!, condition: ModelHotelConditionInput): Hotel @aws_iam @aws_cognito_user_pools
+  createUser(input: CreateUserInput!, condition: ModelUserConditionInput): User @aws_iam @aws_cognito_user_pools
+  updateUser(input: UpdateUserInput!, condition: ModelUserConditionInput): User @aws_iam @aws_cognito_user_pools
+  deleteUser(input: DeleteUserInput!, condition: ModelUserConditionInput): User @aws_iam @aws_cognito_user_pools
+  createRating(input: CreateRatingInput!, condition: ModelRatingConditionInput): Rating @aws_iam @aws_cognito_user_pools
+  updateRating(input: UpdateRatingInput!, condition: ModelRatingConditionInput): Rating @aws_iam @aws_cognito_user_pools
+  deleteRating(input: DeleteRatingInput!, condition: ModelRatingConditionInput): Rating @aws_iam @aws_cognito_user_pools
+  createQRCode(input: CreateQRCodeInput!, condition: ModelQRCodeConditionInput): QRCode @aws_iam @aws_cognito_user_pools
+  updateQRCode(input: UpdateQRCodeInput!, condition: ModelQRCodeConditionInput): QRCode @aws_iam @aws_cognito_user_pools
+  deleteQRCode(input: DeleteQRCodeInput!, condition: ModelQRCodeConditionInput): QRCode @aws_iam @aws_cognito_user_pools
+  createShift(input: CreateShiftInput!, condition: ModelShiftConditionInput): Shift @aws_iam @aws_cognito_user_pools
+  updateShift(input: UpdateShiftInput!, condition: ModelShiftConditionInput): Shift @aws_iam @aws_cognito_user_pools
+  deleteShift(input: DeleteShiftInput!, condition: ModelShiftConditionInput): Shift @aws_iam @aws_cognito_user_pools
+  createBadge(input: CreateBadgeInput!, condition: ModelBadgeConditionInput): Badge @aws_iam @aws_cognito_user_pools
+  updateBadge(input: UpdateBadgeInput!, condition: ModelBadgeConditionInput): Badge @aws_iam @aws_cognito_user_pools
+  deleteBadge(input: DeleteBadgeInput!, condition: ModelBadgeConditionInput): Badge @aws_iam @aws_cognito_user_pools
+  createAnalytics(input: CreateAnalyticsInput!, condition: ModelAnalyticsConditionInput): Analytics @aws_iam @aws_cognito_user_pools
+  updateAnalytics(input: UpdateAnalyticsInput!, condition: ModelAnalyticsConditionInput): Analytics @aws_iam @aws_cognito_user_pools
+  deleteAnalytics(input: DeleteAnalyticsInput!, condition: ModelAnalyticsConditionInput): Analytics @aws_iam @aws_cognito_user_pools
+}
+
+input ModelSubscriptionHotelFilterInput {
+  name: ModelSubscriptionStringInput
+  address: ModelSubscriptionStringInput
+  timezone: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  id: ModelSubscriptionIDInput
+  and: [ModelSubscriptionHotelFilterInput]
+  or: [ModelSubscriptionHotelFilterInput]
+}
+
+type Subscription {
+  onCreateHotel(filter: ModelSubscriptionHotelFilterInput): Hotel @aws_subscribe(mutations: ["createHotel"]) @aws_iam @aws_cognito_user_pools
+  onUpdateHotel(filter: ModelSubscriptionHotelFilterInput): Hotel @aws_subscribe(mutations: ["updateHotel"]) @aws_iam @aws_cognito_user_pools
+  onDeleteHotel(filter: ModelSubscriptionHotelFilterInput): Hotel @aws_subscribe(mutations: ["deleteHotel"]) @aws_iam @aws_cognito_user_pools
+  onCreateUser(filter: ModelSubscriptionUserFilterInput): User @aws_subscribe(mutations: ["createUser"]) @aws_iam @aws_cognito_user_pools
+  onUpdateUser(filter: ModelSubscriptionUserFilterInput): User @aws_subscribe(mutations: ["updateUser"]) @aws_iam @aws_cognito_user_pools
+  onDeleteUser(filter: ModelSubscriptionUserFilterInput): User @aws_subscribe(mutations: ["deleteUser"]) @aws_iam @aws_cognito_user_pools
+  onCreateRating(filter: ModelSubscriptionRatingFilterInput): Rating @aws_subscribe(mutations: ["createRating"]) @aws_iam @aws_cognito_user_pools
+  onUpdateRating(filter: ModelSubscriptionRatingFilterInput): Rating @aws_subscribe(mutations: ["updateRating"]) @aws_iam @aws_cognito_user_pools
+  onDeleteRating(filter: ModelSubscriptionRatingFilterInput): Rating @aws_subscribe(mutations: ["deleteRating"]) @aws_iam @aws_cognito_user_pools
+  onCreateQRCode(filter: ModelSubscriptionQRCodeFilterInput): QRCode @aws_subscribe(mutations: ["createQRCode"]) @aws_iam @aws_cognito_user_pools
+  onUpdateQRCode(filter: ModelSubscriptionQRCodeFilterInput): QRCode @aws_subscribe(mutations: ["updateQRCode"]) @aws_iam @aws_cognito_user_pools
+  onDeleteQRCode(filter: ModelSubscriptionQRCodeFilterInput): QRCode @aws_subscribe(mutations: ["deleteQRCode"]) @aws_iam @aws_cognito_user_pools
+  onCreateShift(filter: ModelSubscriptionShiftFilterInput): Shift @aws_subscribe(mutations: ["createShift"]) @aws_iam @aws_cognito_user_pools
+  onUpdateShift(filter: ModelSubscriptionShiftFilterInput): Shift @aws_subscribe(mutations: ["updateShift"]) @aws_iam @aws_cognito_user_pools
+  onDeleteShift(filter: ModelSubscriptionShiftFilterInput): Shift @aws_subscribe(mutations: ["deleteShift"]) @aws_iam @aws_cognito_user_pools
+  onCreateBadge(filter: ModelSubscriptionBadgeFilterInput): Badge @aws_subscribe(mutations: ["createBadge"]) @aws_iam @aws_cognito_user_pools
+  onUpdateBadge(filter: ModelSubscriptionBadgeFilterInput): Badge @aws_subscribe(mutations: ["updateBadge"]) @aws_iam @aws_cognito_user_pools
+  onDeleteBadge(filter: ModelSubscriptionBadgeFilterInput): Badge @aws_subscribe(mutations: ["deleteBadge"]) @aws_iam @aws_cognito_user_pools
+  onCreateAnalytics(filter: ModelSubscriptionAnalyticsFilterInput): Analytics @aws_subscribe(mutations: ["createAnalytics"]) @aws_iam @aws_cognito_user_pools
+  onUpdateAnalytics(filter: ModelSubscriptionAnalyticsFilterInput): Analytics @aws_subscribe(mutations: ["updateAnalytics"]) @aws_iam @aws_cognito_user_pools
+  onDeleteAnalytics(filter: ModelSubscriptionAnalyticsFilterInput): Analytics @aws_subscribe(mutations: ["deleteAnalytics"]) @aws_iam @aws_cognito_user_pools
+}
+
+type ModelUserConnection @aws_iam @aws_cognito_user_pools {
+  items: [User]!
+  nextToken: String
+}
+
+input ModelUserRoleInput {
+  eq: UserRole
+  ne: UserRole
+}
+
+input ModelUserFilterInput {
+  email: ModelStringInput
+  name: ModelStringInput
+  role: ModelUserRoleInput
+  hotelId: ModelIDInput
+  points: ModelIntInput
+  level: ModelIntInput
+  totalRatings: ModelIntInput
+  averageRating: ModelFloatInput
+  isActive: ModelBooleanInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  id: ModelIDInput
+  and: [ModelUserFilterInput]
+  or: [ModelUserFilterInput]
+  not: ModelUserFilterInput
+}
+
+input ModelUserConditionInput {
+  email: ModelStringInput
+  name: ModelStringInput
+  role: ModelUserRoleInput
+  hotelId: ModelIDInput
+  points: ModelIntInput
+  level: ModelIntInput
+  totalRatings: ModelIntInput
+  averageRating: ModelFloatInput
+  isActive: ModelBooleanInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelUserConditionInput]
+  or: [ModelUserConditionInput]
+  not: ModelUserConditionInput
+}
+
+input CreateUserInput {
+  email: String!
+  name: String!
+  role: UserRole
+  hotelId: ID
+  points: Int
+  level: Int
+  totalRatings: Int
+  averageRating: Float
+  isActive: Boolean
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+  id: ID
+}
+
+input UpdateUserInput {
+  email: String
+  name: String
+  role: UserRole
+  hotelId: ID
+  points: Int
+  level: Int
+  totalRatings: Int
+  averageRating: Float
+  isActive: Boolean
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+  id: ID!
+}
+
+input DeleteUserInput {
+  id: ID!
+}
+
+input ModelSubscriptionUserFilterInput {
+  email: ModelSubscriptionStringInput
+  name: ModelSubscriptionStringInput
+  role: ModelSubscriptionStringInput
+  hotelId: ModelSubscriptionIDInput
+  points: ModelSubscriptionIntInput
+  level: ModelSubscriptionIntInput
+  totalRatings: ModelSubscriptionIntInput
+  averageRating: ModelSubscriptionFloatInput
+  isActive: ModelSubscriptionBooleanInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  id: ModelSubscriptionIDInput
+  and: [ModelSubscriptionUserFilterInput]
+  or: [ModelSubscriptionUserFilterInput]
+}
+
+type ModelRatingConnection @aws_iam @aws_cognito_user_pools {
+  items: [Rating]!
+  nextToken: String
+}
+
+input ModelRatingFilterInput {
+  waiterId: ModelIDInput
+  hotelId: ModelIDInput
+  rating: ModelIntInput
+  serviceRating: ModelIntInput
+  foodRating: ModelIntInput
+  ambianceRating: ModelIntInput
+  comment: ModelStringInput
+  tableNumber: ModelStringInput
+  guestName: ModelStringInput
+  timestamp: ModelStringInput
+  qrToken: ModelStringInput
+  deviceInfo: ModelStringInput
+  isFlagged: ModelBooleanInput
+  flaggedReason: ModelStringInput
+  isResolved: ModelBooleanInput
+  resolvedBy: ModelIDInput
+  resolvedAt: ModelStringInput
+  resolutionNotes: ModelStringInput
+  id: ModelIDInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelRatingFilterInput]
+  or: [ModelRatingFilterInput]
+  not: ModelRatingFilterInput
+}
+
+input ModelRatingConditionInput {
+  waiterId: ModelIDInput
+  hotelId: ModelIDInput
+  rating: ModelIntInput
+  serviceRating: ModelIntInput
+  foodRating: ModelIntInput
+  ambianceRating: ModelIntInput
+  comment: ModelStringInput
+  tableNumber: ModelStringInput
+  guestName: ModelStringInput
+  timestamp: ModelStringInput
+  qrToken: ModelStringInput
+  deviceInfo: ModelStringInput
+  isFlagged: ModelBooleanInput
+  flaggedReason: ModelStringInput
+  isResolved: ModelBooleanInput
+  resolvedBy: ModelIDInput
+  resolvedAt: ModelStringInput
+  resolutionNotes: ModelStringInput
+  and: [ModelRatingConditionInput]
+  or: [ModelRatingConditionInput]
+  not: ModelRatingConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateRatingInput {
+  waiterId: ID!
+  hotelId: ID!
+  rating: Int!
+  serviceRating: Int
+  foodRating: Int
+  ambianceRating: Int
+  comment: String
+  tableNumber: String
+  guestName: String
+  timestamp: AWSDateTime!
+  qrToken: String
+  deviceInfo: AWSJSON
+  isFlagged: Boolean
+  flaggedReason: String
+  isResolved: Boolean
+  resolvedBy: ID
+  resolvedAt: AWSDateTime
+  resolutionNotes: String
+  id: ID
+}
+
+input UpdateRatingInput {
+  waiterId: ID
+  hotelId: ID
+  rating: Int
+  serviceRating: Int
+  foodRating: Int
+  ambianceRating: Int
+  comment: String
+  tableNumber: String
+  guestName: String
+  timestamp: AWSDateTime
+  qrToken: String
+  deviceInfo: AWSJSON
+  isFlagged: Boolean
+  flaggedReason: String
+  isResolved: Boolean
+  resolvedBy: ID
+  resolvedAt: AWSDateTime
+  resolutionNotes: String
+  id: ID!
+}
+
+input DeleteRatingInput {
+  id: ID!
+}
+
+input ModelSubscriptionRatingFilterInput {
+  waiterId: ModelSubscriptionIDInput
+  hotelId: ModelSubscriptionIDInput
+  rating: ModelSubscriptionIntInput
+  serviceRating: ModelSubscriptionIntInput
+  foodRating: ModelSubscriptionIntInput
+  ambianceRating: ModelSubscriptionIntInput
+  comment: ModelSubscriptionStringInput
+  tableNumber: ModelSubscriptionStringInput
+  guestName: ModelSubscriptionStringInput
+  timestamp: ModelSubscriptionStringInput
+  qrToken: ModelSubscriptionStringInput
+  deviceInfo: ModelSubscriptionStringInput
+  isFlagged: ModelSubscriptionBooleanInput
+  flaggedReason: ModelSubscriptionStringInput
+  isResolved: ModelSubscriptionBooleanInput
+  resolvedBy: ModelSubscriptionIDInput
+  resolvedAt: ModelSubscriptionStringInput
+  resolutionNotes: ModelSubscriptionStringInput
+  id: ModelSubscriptionIDInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionRatingFilterInput]
+  or: [ModelSubscriptionRatingFilterInput]
+}
+
+type ModelQRCodeConnection @aws_iam @aws_cognito_user_pools {
+  items: [QRCode]!
+  nextToken: String
+}
+
+input ModelQRCodeFilterInput {
+  waiterId: ModelIDInput
+  shiftId: ModelIDInput
+  token: ModelStringInput
+  url: ModelStringInput
+  isUsed: ModelBooleanInput
+  usedAt: ModelStringInput
+  expiresAt: ModelStringInput
+  createdAt: ModelStringInput
+  id: ModelIDInput
+  updatedAt: ModelStringInput
+  and: [ModelQRCodeFilterInput]
+  or: [ModelQRCodeFilterInput]
+  not: ModelQRCodeFilterInput
+}
+
+input ModelQRCodeConditionInput {
+  waiterId: ModelIDInput
+  shiftId: ModelIDInput
+  token: ModelStringInput
+  url: ModelStringInput
+  isUsed: ModelBooleanInput
+  usedAt: ModelStringInput
+  expiresAt: ModelStringInput
+  createdAt: ModelStringInput
+  and: [ModelQRCodeConditionInput]
+  or: [ModelQRCodeConditionInput]
+  not: ModelQRCodeConditionInput
+  updatedAt: ModelStringInput
+}
+
+input CreateQRCodeInput {
+  waiterId: ID!
+  shiftId: ID!
+  token: String!
+  url: String!
+  isUsed: Boolean
+  usedAt: AWSDateTime
+  expiresAt: AWSDateTime!
+  createdAt: AWSDateTime
+  id: ID
+}
+
+input UpdateQRCodeInput {
+  waiterId: ID
+  shiftId: ID
+  token: String
+  url: String
+  isUsed: Boolean
+  usedAt: AWSDateTime
+  expiresAt: AWSDateTime
+  createdAt: AWSDateTime
+  id: ID!
+}
+
+input DeleteQRCodeInput {
+  id: ID!
+}
+
+input ModelSubscriptionQRCodeFilterInput {
+  waiterId: ModelSubscriptionIDInput
+  shiftId: ModelSubscriptionIDInput
+  token: ModelSubscriptionStringInput
+  url: ModelSubscriptionStringInput
+  isUsed: ModelSubscriptionBooleanInput
+  usedAt: ModelSubscriptionStringInput
+  expiresAt: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  id: ModelSubscriptionIDInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionQRCodeFilterInput]
+  or: [ModelSubscriptionQRCodeFilterInput]
+}
+
+type ModelShiftConnection @aws_iam @aws_cognito_user_pools {
+  items: [Shift]!
+  nextToken: String
+}
+
+input ModelShiftFilterInput {
+  waiterId: ModelIDInput
+  hotelId: ModelIDInput
+  startTime: ModelStringInput
+  endTime: ModelStringInput
+  isActive: ModelBooleanInput
+  pointsEarned: ModelIntInput
+  ratingsCount: ModelIntInput
+  averageRating: ModelFloatInput
+  totalTips: ModelFloatInput
+  id: ModelIDInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelShiftFilterInput]
+  or: [ModelShiftFilterInput]
+  not: ModelShiftFilterInput
+}
+
+input ModelShiftConditionInput {
+  waiterId: ModelIDInput
+  hotelId: ModelIDInput
+  startTime: ModelStringInput
+  endTime: ModelStringInput
+  isActive: ModelBooleanInput
+  pointsEarned: ModelIntInput
+  ratingsCount: ModelIntInput
+  averageRating: ModelFloatInput
+  totalTips: ModelFloatInput
+  and: [ModelShiftConditionInput]
+  or: [ModelShiftConditionInput]
+  not: ModelShiftConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateShiftInput {
+  waiterId: ID!
+  hotelId: ID!
+  startTime: AWSDateTime!
+  endTime: AWSDateTime
+  isActive: Boolean
+  pointsEarned: Int
+  ratingsCount: Int
+  averageRating: Float
+  totalTips: Float
+  id: ID
+}
+
+input UpdateShiftInput {
+  waiterId: ID
+  hotelId: ID
+  startTime: AWSDateTime
+  endTime: AWSDateTime
+  isActive: Boolean
+  pointsEarned: Int
+  ratingsCount: Int
+  averageRating: Float
+  totalTips: Float
+  id: ID!
+}
+
+input DeleteShiftInput {
+  id: ID!
+}
+
+input ModelSubscriptionShiftFilterInput {
+  waiterId: ModelSubscriptionIDInput
+  hotelId: ModelSubscriptionIDInput
+  startTime: ModelSubscriptionStringInput
+  endTime: ModelSubscriptionStringInput
+  isActive: ModelSubscriptionBooleanInput
+  pointsEarned: ModelSubscriptionIntInput
+  ratingsCount: ModelSubscriptionIntInput
+  averageRating: ModelSubscriptionFloatInput
+  totalTips: ModelSubscriptionFloatInput
+  id: ModelSubscriptionIDInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionShiftFilterInput]
+  or: [ModelSubscriptionShiftFilterInput]
+}
+
+type ModelBadgeConnection @aws_iam @aws_cognito_user_pools {
+  items: [Badge]!
+  nextToken: String
+}
+
+input ModelBadgeTypeInput {
+  eq: BadgeType
+  ne: BadgeType
+}
+
+input ModelBadgeFilterInput {
+  waiterId: ModelIDInput
+  type: ModelBadgeTypeInput
+  name: ModelStringInput
+  description: ModelStringInput
+  icon: ModelStringInput
+  earnedAt: ModelStringInput
+  criteria: ModelStringInput
+  id: ModelIDInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelBadgeFilterInput]
+  or: [ModelBadgeFilterInput]
+  not: ModelBadgeFilterInput
+}
+
+input ModelBadgeConditionInput {
+  waiterId: ModelIDInput
+  type: ModelBadgeTypeInput
+  name: ModelStringInput
+  description: ModelStringInput
+  icon: ModelStringInput
+  earnedAt: ModelStringInput
+  criteria: ModelStringInput
+  and: [ModelBadgeConditionInput]
+  or: [ModelBadgeConditionInput]
+  not: ModelBadgeConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateBadgeInput {
+  waiterId: ID!
+  type: BadgeType
+  name: String!
+  description: String
+  icon: String
+  earnedAt: AWSDateTime!
+  criteria: AWSJSON
+  id: ID
+}
+
+input UpdateBadgeInput {
+  waiterId: ID
+  type: BadgeType
+  name: String
+  description: String
+  icon: String
+  earnedAt: AWSDateTime
+  criteria: AWSJSON
+  id: ID!
+}
+
+input DeleteBadgeInput {
+  id: ID!
+}
+
+input ModelSubscriptionBadgeFilterInput {
+  waiterId: ModelSubscriptionIDInput
+  type: ModelSubscriptionStringInput
+  name: ModelSubscriptionStringInput
+  description: ModelSubscriptionStringInput
+  icon: ModelSubscriptionStringInput
+  earnedAt: ModelSubscriptionStringInput
+  criteria: ModelSubscriptionStringInput
+  id: ModelSubscriptionIDInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionBadgeFilterInput]
+  or: [ModelSubscriptionBadgeFilterInput]
+}
+
+type ModelAnalyticsConnection @aws_iam @aws_cognito_user_pools {
+  items: [Analytics]!
+  nextToken: String
+}
+
+input ModelAnalyticsPeriodInput {
+  eq: AnalyticsPeriod
+  ne: AnalyticsPeriod
+}
+
+input ModelAnalyticsFilterInput {
+  hotelId: ModelIDInput
+  period: ModelAnalyticsPeriodInput
+  date: ModelStringInput
+  totalRatings: ModelIntInput
+  averageRating: ModelFloatInput
+  totalPoints: ModelIntInput
+  activeWaiters: ModelIntInput
+  topWaiterId: ModelIDInput
+  metrics: ModelStringInput
+  id: ModelIDInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelAnalyticsFilterInput]
+  or: [ModelAnalyticsFilterInput]
+  not: ModelAnalyticsFilterInput
+}
+
+input ModelAnalyticsConditionInput {
+  hotelId: ModelIDInput
+  period: ModelAnalyticsPeriodInput
+  date: ModelStringInput
+  totalRatings: ModelIntInput
+  averageRating: ModelFloatInput
+  totalPoints: ModelIntInput
+  activeWaiters: ModelIntInput
+  topWaiterId: ModelIDInput
+  metrics: ModelStringInput
+  and: [ModelAnalyticsConditionInput]
+  or: [ModelAnalyticsConditionInput]
+  not: ModelAnalyticsConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateAnalyticsInput {
+  hotelId: ID!
+  period: AnalyticsPeriod
+  date: AWSDate!
+  totalRatings: Int
+  averageRating: Float
+  totalPoints: Int
+  activeWaiters: Int
+  topWaiterId: ID
+  metrics: AWSJSON
+  id: ID
+}
+
+input UpdateAnalyticsInput {
+  hotelId: ID
+  period: AnalyticsPeriod
+  date: AWSDate
+  totalRatings: Int
+  averageRating: Float
+  totalPoints: Int
+  activeWaiters: Int
+  topWaiterId: ID
+  metrics: AWSJSON
+  id: ID!
+}
+
+input DeleteAnalyticsInput {
+  id: ID!
+}
+
+input ModelSubscriptionAnalyticsFilterInput {
+  hotelId: ModelSubscriptionIDInput
+  period: ModelSubscriptionStringInput
+  date: ModelSubscriptionStringInput
+  totalRatings: ModelSubscriptionIntInput
+  averageRating: ModelSubscriptionFloatInput
+  totalPoints: ModelSubscriptionIntInput
+  activeWaiters: ModelSubscriptionIntInput
+  topWaiterId: ModelSubscriptionIDInput
+  metrics: ModelSubscriptionStringInput
+  id: ModelSubscriptionIDInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionAnalyticsFilterInput]
+  or: [ModelSubscriptionAnalyticsFilterInput]
+}

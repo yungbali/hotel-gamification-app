@@ -7,6 +7,7 @@ export interface User {
   avatar?: string;
   isActive: boolean;
   createdAt: Date;
+  updatedAt?: Date;
 }
 
 export interface Waiter extends User {
@@ -52,6 +53,7 @@ export interface Rating {
   comment?: string;
   tableNumber?: string;
   timestamp: Date;
+  hotelId?: string;
   location?: {
     latitude: number;
     longitude: number;
@@ -84,6 +86,7 @@ export interface Shift {
   pointsEarned: number;
   ratingsCount: number;
   averageRating: number;
+  hotelId?: string;
 }
 
 export interface Badge {

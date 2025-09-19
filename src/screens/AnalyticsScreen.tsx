@@ -4,7 +4,7 @@ import { Text, Card, Title, Paragraph, Button, Chip, SegmentedButtons } from 're
 import { Ionicons } from '@expo/vector-icons';
 import { motion } from '../utils/motion';
 import { AuthService } from '../services/authService';
-import { StorageService } from '../services/storageService';
+import { getDataService } from '../services/dataService';
 import { User, Analytics } from '../types';
 
 const AnalyticsScreen: React.FC = () => {
@@ -20,7 +20,7 @@ const AnalyticsScreen: React.FC = () => {
   const loadData = async () => {
     try {
       const authService = AuthService.getInstance();
-      const storageService = StorageService.getInstance();
+      const storageService = getDataService();
 
       const currentUser = await authService.getCurrentUser();
       setUser(currentUser);

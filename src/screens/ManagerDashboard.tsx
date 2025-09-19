@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
 import { Card, Title, Button } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
-import { StorageService } from '../services/storageService';
+import { getDataService } from '../services/dataService';
 import { GamificationService } from '../services/gamificationService';
 import { FeedbackService } from '../services/feedbackService';
 import { AuthService } from '../services/authService';
@@ -64,7 +64,7 @@ export default function ManagerDashboard({ navigation }: ManagerDashboardProps) 
 
   const loadData = async () => {
     try {
-      const storageService = StorageService.getInstance();
+      const storageService = getDataService();
       const gamificationService = GamificationService.getInstance();
       const feedbackService = FeedbackService.getInstance();
 
@@ -169,7 +169,7 @@ export default function ManagerDashboard({ navigation }: ManagerDashboardProps) 
 
   const handleResolveRating = async (rating: Rating) => {
     try {
-      const storageService = StorageService.getInstance();
+      const storageService = getDataService();
       const authService = AuthService.getInstance();
       const manager = await authService.getCurrentUser();
       await storageService.resolveRating(rating.id, manager?.id, rating.resolutionNotes);
@@ -192,7 +192,7 @@ export default function ManagerDashboard({ navigation }: ManagerDashboardProps) 
 
   const handleDeleteRating = async (rating: Rating) => {
     try {
-      const storageService = StorageService.getInstance();
+      const storageService = getDataService();
       await storageService.deleteRating(rating.id);
       await loadData();
     } catch (error) {

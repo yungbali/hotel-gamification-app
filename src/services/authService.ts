@@ -1,9 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { fetchUserAttributes, getCurrentUser, signIn, signOut } from 'aws-amplify/auth';
 import { User, Waiter, Manager, Hotel } from '../types';
-import { StorageService } from './storageService';
 import { AmplifyStorageService } from './amplifyStorageService';
-import { isAmplifyConfigured, shouldUseAmplify } from './amplifyClient';
-import { signIn, signOut, getCurrentUser, signUp, confirmSignUp, fetchAuthSession } from 'aws-amplify/auth';
+import { shouldUseAmplify } from './amplifyClient';
+import { StorageService } from './storageService';
 
 const API_BASE_URL = 'https://your-api-endpoint.com/api'; // Replace with actual API
 
@@ -21,9 +21,8 @@ export class AuthService {
   }
 
   constructor() {
-    // Use Amplify storage if available, otherwise fallback to local storage
-    this.storageService = shouldUseAmplify() 
-      ? AmplifyStorageService.getInstance() as any
+    this.storageService = shouldUseAmplify()
+      ? AmplifyStorageService.getInstance()
       : StorageService.getInstance();
   }
 
@@ -60,65 +59,20 @@ export class AuthService {
   }
 
   // Amplify Auth Methods
-  async amplifyLogin(email: string, password: string): Promise<User> {
+  private async amplifyLogin(email: string, password: string): Promise<User> {
     try {
-      const signInResult = await signIn({ username: email, password });
-      
-      if (signInResult.isSignedIn) {
-        const cognitoUser = await getCurrentUser();
-        
-        // Convert Cognito user to our User type
-        const user: User = {
-          id: cognitoUser.userId,
-          email: email,
-          name: cognitoUser.username,
-          role: 'waiter', // Default role, can be customized
-          hotelId: 'hotel_1', // Default hotel, can be from custom attributes
-          isActive: true,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        };
+      const result = await signIn({ username: email, password });
 
-        await this.setCurrentUser(user);
-        return user;
-      } else {
+      if (!result.isSignedIn) {
         throw new Error('Sign in not completed');
       }
+
+      const user = await this.getAmplifyCurrentUser();
+      await this.setCurrentUser(user);
+
+      return user;
     } catch (error) {
       console.error('Amplify login error:', error);
-      throw error;
-    }
-  }
-
-  async amplifySignUp(email: string, password: string, name: string, role: 'waiter' | 'manager' = 'waiter'): Promise<void> {
-    try {
-      await signUp({
-        username: email,
-        password: password,
-        options: {
-          userAttributes: {
-            email: email,
-            given_name: name.split(' ')[0] || name,
-            family_name: name.split(' ')[1] || '',
-            'custom:role': role,
-            'custom:hotelId': 'hotel_1', // Default hotel
-          }
-        }
-      });
-    } catch (error) {
-      console.error('Amplify sign up error:', error);
-      throw error;
-    }
-  }
-
-  async amplifyConfirmSignUp(email: string, confirmationCode: string): Promise<void> {
-    try {
-      await confirmSignUp({
-        username: email,
-        confirmationCode: confirmationCode
-      });
-    } catch (error) {
-      console.error('Amplify confirm sign up error:', error);
       throw error;
     }
   }
@@ -142,6 +96,17 @@ export class AuthService {
   async getCurrentUser(): Promise<User | null> {
     if (this.currentUser) {
       return this.currentUser;
+    }
+
+    if (shouldUseAmplify()) {
+      try {
+       const user = await this.getAmplifyCurrentUser();
+       this.currentUser = user;
+        await this.storageService.storeUser(user);
+        return user;
+      } catch (error) {
+        // If no Amplify session, fall back to local cache
+      }
     }
 
     this.currentUser = await this.storageService.getCurrentUser();
@@ -227,5 +192,26 @@ export class AuthService {
     }
 
     return user;
+  }
+
+  private async getAmplifyCurrentUser(): Promise<User> {
+    const cognitoUser = await getCurrentUser();
+    const attributes = await fetchUserAttributes();
+
+    const role = (attributes['custom:role'] as User['role']) || 'waiter';
+    const hotelId = (attributes['custom:hotelId'] as string) || 'default_hotel';
+    const givenName = attributes.given_name || ''; // optional
+    const familyName = attributes.family_name || '';
+
+    return {
+      id: cognitoUser.userId,
+      email: attributes.email ?? '',
+      name: `${givenName} ${familyName}`.trim() || cognitoUser.username,
+      role: role,
+      hotelId,
+      isActive: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
   }
 }

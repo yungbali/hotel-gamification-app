@@ -1,10 +1,10 @@
 import { Rating, Guest, QRCode } from '../types';
-import { StorageService } from './storageService';
+import { getDataService, DataService } from './dataService';
 import { GamificationService } from './gamificationService';
 
 export class FeedbackService {
   private static instance: FeedbackService;
-  private storageService: StorageService;
+  private storageService: DataService;
   private gamificationService: GamificationService;
 
   static getInstance(): FeedbackService {
@@ -15,7 +15,7 @@ export class FeedbackService {
   }
 
   constructor() {
-    this.storageService = StorageService.getInstance();
+    this.storageService = getDataService();
     this.gamificationService = GamificationService.getInstance();
   }
 

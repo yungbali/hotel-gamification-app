@@ -6,7 +6,7 @@ import { motion } from '../utils/motion';
 import UniversalQRCode from '../components/Common/UniversalQRCode';
 import { AuthService } from '../services/authService';
 import { QRCodeService } from '../services/qrCodeService';
-import { StorageService } from '../services/storageService';
+import { getDataService } from '../services/dataService';
 import { User, QRCode as QRCodeType, Shift } from '../types';
 
 const QRCodeScreen: React.FC = () => {
@@ -35,7 +35,7 @@ const QRCodeScreen: React.FC = () => {
 
   const loadExistingSession = async (waiterId: string) => {
     try {
-      const storageService = StorageService.getInstance();
+      const storageService = getDataService();
       const qrCodeService = QRCodeService.getInstance();
 
       const activeShift = await storageService.getActiveShiftByWaiter(waiterId);
@@ -64,7 +64,7 @@ const QRCodeScreen: React.FC = () => {
 
     setIsGenerating(true);
     try {
-      const storageService = StorageService.getInstance();
+      const storageService = getDataService();
       const qrCodeService = QRCodeService.getInstance();
 
       const newShift: Shift = {
@@ -117,7 +117,7 @@ const QRCodeScreen: React.FC = () => {
           text: 'End Shift', 
           onPress: async () => {
             try {
-              const storageService = StorageService.getInstance();
+              const storageService = getDataService();
               const qrCodeService = QRCodeService.getInstance();
 
               if (qrCode) {

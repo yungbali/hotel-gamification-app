@@ -199,7 +199,7 @@
         // Validate QR code and get waiter info on page load
         async function validateQRCode() {
             try {
-                const response = await fetch(`/api/qr/${token}`);
+                const response = await fetch(`https://main.d2iiia83lh3haz.amplifyapp.com/api/qr/${token}`);
                 if (response.ok) {
                     const data = await response.json();
                     if (data.isValid && data.waiterName) {
@@ -302,7 +302,7 @@
                 console.log('Submitting feedback:', feedbackData);
                 
                 // Submit to API
-                const response = await fetch('/api/feedback', {
+                const response = await fetch('https://main.d2iiia83lh3haz.amplifyapp.com/api/feedback', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

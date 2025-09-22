@@ -18,6 +18,10 @@ export const auth = defineAuth({
       dataType: 'String',
       mutable: true,
     },
+    'custom:supervisorId': {
+      dataType: 'String',
+      mutable: true,
+    },
     'custom:hotelId': {
       dataType: 'String',
       mutable: true,

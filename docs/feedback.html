@@ -182,8 +182,9 @@
         const urlParams = new URLSearchParams(window.location.search);
         
         // First check for redirect_token (from 404 redirect)
-        if (urlParams.get('redirect_token')) {
-            token = urlParams.get('redirect_token');
+        const redirectToken = urlParams.get('redirect_token');
+        if (redirectToken) {
+            token = redirectToken;
         }
         // Then check for regular token parameter
         else if (urlParams.get('token')) {

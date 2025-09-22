@@ -168,20 +168,30 @@ export class AuthService {
     }
   }
 
-  // Mock data for development
+  // Mock login for development
   async mockLogin(email: string, password: string): Promise<User> {
-    // Initialize demo data if needed
-    await this.storageService.initializeDemoData();
+    // Initialize storage
+    await this.storageService.initializeStorage();
     
     // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 1000));
 
+    // Check stored credentials
+    const storedCredentials = await this.getStoredCredentials();
+    const credentialMatch = storedCredentials.find(c => 
+      c.email.toLowerCase() === email.toLowerCase() && c.password === password
+    );
+    
+    if (!credentialMatch) {
+      throw new Error('Invalid credentials');
+    }
+
     // Get users from storage
     const users = await this.storageService.getUsers();
-    const user = users.find(u => u.email === email);
+    const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
     
-    if (!user || password !== 'password') {
-      throw new Error('Invalid credentials');
+    if (!user) {
+      throw new Error('User not found');
     }
 
     await this.setCurrentUser(user);
@@ -192,6 +202,29 @@ export class AuthService {
     }
 
     return user;
+  }
+
+  // Helper methods for credential management
+  async mockStoreCredentials(email: string, password: string): Promise<void> {
+    const credentials = await this.getStoredCredentials();
+    const existingIndex = credentials.findIndex(c => c.email.toLowerCase() === email.toLowerCase());
+    
+    if (existingIndex >= 0) {
+      credentials[existingIndex].password = password;
+    } else {
+      credentials.push({ email: email.toLowerCase(), password });
+    }
+    
+    await AsyncStorage.setItem('mock_credentials', JSON.stringify(credentials));
+  }
+
+  private async getStoredCredentials(): Promise<Array<{email: string, password: string}>> {
+    try {
+      const stored = await AsyncStorage.getItem('mock_credentials');
+      return stored ? JSON.parse(stored) : [];
+    } catch {
+      return [];
+    }
   }
 
   private async getAmplifyCurrentUser(): Promise<User> {

@@ -8,11 +8,15 @@ import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { configureAmplify } from './src/services/amplifyClient';
-import { AuthService } from './src/services/authService';
+import { AmplifyAuthService } from './src/services/amplifyAuthService';
+import { AmplifyDataService } from './src/services/amplifyDataService';
 import { User } from './src/types';
 import LoginScreen from './src/screens/LoginScreen';
 import WaiterDashboard from './src/screens/WaiterDashboard';
 import ManagerDashboard from './src/screens/ManagerDashboard';
+import SupervisorDashboard from './src/screens/SupervisorDashboard';
+import AddWaiterScreen from './src/screens/AddWaiterScreen';
+import SetupScreen from './src/screens/SetupScreen';
 import QRCodeScreen from './src/screens/QRCodeScreen';
 import LeaderboardScreen from './src/screens/LeaderboardScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
@@ -56,6 +60,15 @@ function WaiterTabs() {
   );
 }
 
+function SupervisorTabs() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="SupervisorMain" component={SupervisorDashboard} />
+      <Stack.Screen name="AddWaiter" component={AddWaiterScreen} />
+    </Stack.Navigator>
+  );
+}
+
 function ManagerTabs() {
   return (
     <Tab.Navigator
@@ -92,6 +105,7 @@ configureAmplify();
 export default function App() {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [needsSetup, setNeedsSetup] = useState(false);
 
   useEffect(() => {
     checkAuthStatus();
@@ -102,12 +116,16 @@ export default function App() {
       // Initialize Amplify first
       await configureAmplify();
       
-      const authService = AuthService.getInstance();
+      const authService = AmplifyAuthService.getInstance();
+      const dataService = AmplifyDataService.getInstance();
       
-      // Initialize demo data on first run
-      const { StorageService } = await import('./src/services/storageService');
-      const storageService = StorageService.getInstance();
-      await storageService.initializeDemoData();
+      // Check if system needs setup
+      const needsSetup = await authService.checkSetupRequired();
+      if (needsSetup) {
+        setNeedsSetup(true);
+        setIsLoading(false);
+        return;
+      }
       
       const isAuthenticated = await authService.isAuthenticated();
       
@@ -127,9 +145,14 @@ export default function App() {
   };
 
   const handleLogout = async () => {
-    const authService = AuthService.getInstance();
-    await authService.logout();
+    const authService = AmplifyAuthService.getInstance();
+    await authService.signOut();
     setUser(null);
+  };
+
+  const handleSetupComplete = () => {
+    setNeedsSetup(false);
+    checkAuthStatus();
   };
 
   if (isLoading) {
@@ -142,12 +165,18 @@ export default function App() {
         <NavigationContainer>
           <StatusBar style="auto" />
           <Stack.Navigator screenOptions={{ headerShown: false }}>
-            {!user ? (
+            {needsSetup ? (
+              <Stack.Screen name="Setup">
+                {(props) => <SetupScreen {...props} onSetupComplete={handleSetupComplete} />}
+              </Stack.Screen>
+            ) : !user ? (
               <Stack.Screen name="Login">
                 {(props) => <LoginScreen {...props} onLogin={handleLogin} />}
               </Stack.Screen>
             ) : user.role === 'waiter' ? (
               <Stack.Screen name="WaiterApp" component={WaiterTabs} />
+            ) : user.role === 'supervisor' ? (
+              <Stack.Screen name="SupervisorApp" component={SupervisorTabs} />
             ) : user.role === 'manager' ? (
               <Stack.Screen name="ManagerApp" component={ManagerTabs} />
             ) : (

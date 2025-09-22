@@ -2,7 +2,7 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  role: 'waiter' | 'manager' | 'admin';
+  role: 'waiter' | 'supervisor' | 'manager' | 'admin';
   hotelId: string;
   avatar?: string;
   isActive: boolean;
@@ -18,6 +18,13 @@ export interface Waiter extends User {
   currentShiftId?: string;
   totalRatings: number;
   averageRating: number;
+}
+
+export interface Supervisor extends User {
+  role: 'supervisor';
+  hotelId: string;
+  permissions: string[];
+  managedWaiters: string[]; // Array of waiter IDs they supervise
 }
 
 export interface Manager extends User {

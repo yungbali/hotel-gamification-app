@@ -23,8 +23,9 @@ const schema = a.schema({
     .model({
       email: a.string().required(),
       name: a.string().required(),
-      role: a.enum(['waiter', 'manager', 'admin']),
+      role: a.enum(['waiter', 'supervisor', 'manager', 'admin']),
       hotelId: a.id(),
+      supervisorId: a.id(),
       points: a.integer().default(0),
       level: a.integer().default(1),
       totalRatings: a.integer().default(0),
@@ -35,6 +36,8 @@ const schema = a.schema({
       
       // Relationships
       hotel: a.belongsTo('Hotel', 'hotelId'),
+      supervisor: a.belongsTo('User', 'supervisorId'),
+      managedWaiters: a.hasMany('User', 'supervisorId'),
       shifts: a.hasMany('Shift', 'waiterId'),
       ratings: a.hasMany('Rating', 'waiterId'),
       badges: a.hasMany('Badge', 'waiterId'),

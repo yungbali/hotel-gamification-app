@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { TextInput, Button, Text, Card, Title, Paragraph } from 'react-native-paper';
 import { motion } from '../utils/motion';
-import { AuthService } from '../services/authService';
+import { AmplifyAuthService } from '../services/amplifyAuthService';
 import { User } from '../types';
 
 interface LoginScreenProps {
@@ -25,8 +25,8 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
     setError('');
 
     try {
-      const authService = AuthService.getInstance();
-      const user = await authService.mockLogin(email, password);
+      const authService = AmplifyAuthService.getInstance();
+      const user = await authService.signIn(email, password);
       onLogin(user);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Login failed');
@@ -35,10 +35,6 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
     }
   };
 
-  const demoAccounts = [
-    { role: 'Waiter', email: 'waiter@hotel.com', password: 'password' },
-    { role: 'Manager', email: 'manager@hotel.com', password: 'password' },
-  ];
 
   return (
     <KeyboardAvoidingView 
@@ -94,27 +90,10 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
                 Login
               </Button>
 
-              <View style={styles.demoSection}>
-                <Text style={styles.demoTitle}>Demo Accounts:</Text>
-                {demoAccounts.map((account, index) => (
-                  <motion.div
-                    key={account.role}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    <Button
-                      mode="outlined"
-                      onPress={() => {
-                        setEmail(account.email);
-                        setPassword(account.password);
-                      }}
-                      style={styles.demoButton}
-                    >
-                      {account.role}
-                    </Button>
-                  </motion.div>
-                ))}
+              <View style={styles.infoSection}>
+                <Text style={styles.infoText}>
+                  Contact your supervisor for login credentials
+                </Text>
               </View>
             </Card.Content>
           </Card>
@@ -168,20 +147,18 @@ const styles = StyleSheet.create({
   buttonContent: {
     paddingVertical: 8,
   },
-  demoSection: {
-    marginTop: 24,
-    paddingTop: 24,
-    borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
+  infoSection: {
+    marginTop: 30,
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor: '#f8f9fa',
+    borderRadius: 8,
   },
-  demoTitle: {
-    textAlign: 'center',
-    marginBottom: 12,
-    fontWeight: 'bold',
+  infoText: {
+    fontSize: 14,
     color: '#666',
-  },
-  demoButton: {
-    marginBottom: 8,
+    textAlign: 'center',
+    fontStyle: 'italic',
   },
 });
 

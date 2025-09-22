@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, Platform } from 'react-native';
 
 interface UniversalQRCodeProps {
@@ -14,31 +14,59 @@ const UniversalQRCode: React.FC<UniversalQRCodeProps> = ({
   color = "#000000",
   backgroundColor = "#FFFFFF"
 }) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    if (Platform.OS === 'web' && canvasRef.current) {
+      generateWebQRCode();
+    }
+  }, [value, size, color, backgroundColor]);
+
+  const generateWebQRCode = async () => {
+    if (!canvasRef.current) return;
+    
+    try {
+      const QRCode = require('qrcode');
+      await QRCode.toCanvas(canvasRef.current, value, {
+        width: size,
+        color: {
+          dark: color,
+          light: backgroundColor
+        },
+        margin: 2
+      });
+    } catch (error) {
+      console.error('QR Code generation error:', error);
+      // Fallback to showing the URL if QR generation fails
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.fillStyle = backgroundColor;
+        ctx.fillRect(0, 0, size, size);
+        ctx.fillStyle = color;
+        ctx.font = '12px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('QR CODE', size / 2, size / 2 - 20);
+        ctx.font = '10px Arial';
+        ctx.fillText(value, size / 2, size / 2);
+        ctx.fillText('📱 Scan with phone camera', size / 2, size / 2 + 20);
+      }
+    }
+  };
+
   if (Platform.OS === 'web') {
-    // For web, we'll use a simple HTML canvas approach or show a placeholder
     return (
-      <View style={[styles.webQRContainer, { width: size, height: size, backgroundColor }]}>
-        <Text style={styles.webQRTitle}>QR CODE</Text>
+      <View style={[styles.webQRContainer, { width: size, height: size }]}>
+        <canvas
+          ref={canvasRef}
+          width={size}
+          height={size}
+          style={{ maxWidth: '100%', height: 'auto' }}
+        />
         <Text style={styles.webQRUrl}>{value}</Text>
         <Text style={styles.webQRInstruction}>
           📱 Scan with phone camera
         </Text>
-        <View style={styles.webQRPattern}>
-          {/* Simple pattern to simulate QR code */}
-          {Array.from({ length: 8 }, (_, i) => (
-            <View key={i} style={styles.webQRRow}>
-              {Array.from({ length: 8 }, (_, j) => (
-                <View
-                  key={j}
-                  style={[
-                    styles.webQRSquare,
-                    { backgroundColor: (i + j) % 2 === 0 ? color : backgroundColor }
-                  ]}
-                />
-              ))}
-            </View>
-          ))}
-        </View>
       </View>
     );
   }
@@ -73,33 +101,19 @@ const styles = StyleSheet.create({
     padding: 16,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  webQRTitle: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    marginBottom: 8,
+    backgroundColor: '#fff',
   },
   webQRUrl: {
     fontSize: 10,
     color: '#666',
     textAlign: 'center',
-    marginBottom: 12,
+    marginTop: 12,
+    marginBottom: 8,
   },
   webQRInstruction: {
     fontSize: 12,
     color: '#2196F3',
-    marginBottom: 16,
-  },
-  webQRPattern: {
-    flexDirection: 'column',
-  },
-  webQRRow: {
-    flexDirection: 'row',
-  },
-  webQRSquare: {
-    width: 8,
-    height: 8,
-    margin: 1,
+    textAlign: 'center',
   },
   fallbackContainer: {
     borderWidth: 2,

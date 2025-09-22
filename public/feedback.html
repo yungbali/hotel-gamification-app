@@ -177,15 +177,45 @@
     </div>
 
     <script>
-        // Get URL parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('token') || 'demo-token';
+        // Get token from URL path (e.g., /feedback/abc123) or query parameter
+        let token = 'demo-token';
+        const pathParts = window.location.pathname.split('/');
+        if (pathParts.length >= 3 && pathParts[1] === 'feedback') {
+            token = pathParts[2];
+        } else {
+            const urlParams = new URLSearchParams(window.location.search);
+            token = urlParams.get('token') || 'demo-token';
+        }
+        
+        console.log('Extracted token:', token);
         
         // Set waiter name from URL if provided
+        const urlParams = new URLSearchParams(window.location.search);
         const waiterName = urlParams.get('waiter') || '';
         if (waiterName) {
             document.getElementById('waiterName').value = waiterName;
         }
+        
+        // Validate QR code and get waiter info on page load
+        async function validateQRCode() {
+            try {
+                const response = await fetch(`/api/qr/${token}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.isValid && data.waiterName) {
+                        document.getElementById('waiterName').value = data.waiterName;
+                        document.getElementById('waiterName').readOnly = true;
+                    }
+                } else {
+                    console.warn('QR code validation failed');
+                }
+            } catch (error) {
+                console.warn('QR code validation error:', error);
+            }
+        }
+        
+        // Validate on page load
+        validateQRCode();
         
         // Star rating functionality
         function setupRating(ratingId, valueId) {
@@ -240,30 +270,66 @@
             
             try {
                 const formData = new FormData(e.target);
+                
+                // Calculate average rating from all rating fields
+                const serviceRating = parseInt(formData.get('serviceRating')) || 0;
+                const foodRating = parseInt(formData.get('foodRating')) || 0;
+                const ambianceRating = parseInt(formData.get('ambianceRating')) || 0;
+                
+                // Check if at least one rating is provided
+                if (serviceRating === 0 && foodRating === 0 && ambianceRating === 0) {
+                    throw new Error('Please provide at least one rating');
+                }
+                
+                // Calculate average rating (non-zero ratings only)
+                const ratings = [serviceRating, foodRating, ambianceRating].filter(r => r > 0);
+                const averageRating = ratings.reduce((sum, r) => sum + r, 0) / ratings.length;
+                
                 const feedbackData = {
                     token: token,
-                    waiterName: formData.get('waiterName'),
-                    serviceRating: parseInt(formData.get('serviceRating')),
-                    foodRating: parseInt(formData.get('foodRating')),
-                    ambianceRating: parseInt(formData.get('ambianceRating')),
-                    comments: formData.get('comments'),
-                    timestamp: new Date().toISOString()
+                    rating: Math.round(averageRating),
+                    comment: formData.get('comments') || '',
+                    tableNumber: '', // Could be added as a form field later
+                    lastName: '', // Could be added as a form field later
+                    timestamp: new Date().toISOString(),
+                    deviceInfo: {
+                        userAgent: navigator.userAgent,
+                        ip: 'web-client',
+                        location: null // Could be added with geolocation later
+                    }
                 };
                 
-                // For demo purposes, we'll simulate a successful submission
-                // In production, this would call your actual API
-                await new Promise(resolve => setTimeout(resolve, 1000));
+                console.log('Submitting feedback:', feedbackData);
                 
-                // Simulate success
+                // Submit to API
+                const response = await fetch('/api/feedback', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(feedbackData)
+                });
+                
+                const result = await response.json();
+                
+                if (!response.ok || !result.success) {
+                    throw new Error(result.message || 'Failed to submit feedback');
+                }
+                
+                // Success
                 loadingMessage.style.display = 'none';
+                successMessage.textContent = `✅ Thank you for your feedback! ${result.pointsAwarded ? `Your waiter earned ${result.pointsAwarded} points!` : ''}`;
                 successMessage.style.display = 'block';
                 
-                // Reset form after 3 seconds
+                // Reset form after 5 seconds
                 setTimeout(() => {
                     e.target.reset();
+                    // Reset all star ratings
+                    document.querySelectorAll('.star').forEach(star => star.classList.remove('active'));
+                    document.querySelectorAll('input[type="hidden"]').forEach(input => input.value = '0');
                     successMessage.style.display = 'none';
                     submitBtn.disabled = false;
-                }, 3000);
+                }, 5000);
                 
             } catch (error) {
                 console.error('Error submitting feedback:', error);

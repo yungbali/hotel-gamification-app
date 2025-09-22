@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting to Feedback Form...</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .loading {
+            color: #667eea;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="loading">🔄 Loading feedback form...</div>
+        <div class="spinner"></div>
+        <p style="color: #666; margin-top: 20px;">Please wait while we prepare your feedback form.</p>
+    </div>
+
+    <script>
+        (function() {
+            // Get the current path to extract token
+            const path = window.location.pathname;
+            console.log('Feedback index - Current path:', path);
+            
+            // Extract token from path like /hotel-gamification-app/feedback/token_here/
+            const pathParts = path.split('/').filter(part => part !== '');
+            let token = null;
+            
+            // Find the token after 'feedback' in the path
+            const feedbackIndex = pathParts.indexOf('feedback');
+            if (feedbackIndex !== -1 && feedbackIndex < pathParts.length - 1) {
+                token = pathParts[feedbackIndex + 1];
+            }
+            
+            console.log('Feedback index - Extracted token:', token);
+            
+            if (token) {
+                // Redirect to feedback.html with the token
+                const newUrl = `/hotel-gamification-app/feedback.html?redirect_token=${token}`;
+                console.log('Feedback index - Redirecting to:', newUrl);
+                window.location.replace(newUrl);
+            } else {
+                // No token found, redirect to main feedback form
+                console.log('Feedback index - No token, redirecting to main form');
+                window.location.replace('/hotel-gamification-app/feedback.html');
+            }
+        })();
+    </script>
+</body>
+</html>

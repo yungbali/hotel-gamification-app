@@ -179,12 +179,22 @@
     <script>
         // Get token from URL path (e.g., /feedback/abc123) or query parameter
         let token = 'demo-token';
-        const pathParts = window.location.pathname.split('/');
-        if (pathParts.length >= 3 && pathParts[1] === 'feedback') {
-            token = pathParts[2];
-        } else {
-            const urlParams = new URLSearchParams(window.location.search);
-            token = urlParams.get('token') || 'demo-token';
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // First check for redirect_token (from 404 redirect)
+        if (urlParams.get('redirect_token')) {
+            token = urlParams.get('redirect_token');
+        }
+        // Then check for regular token parameter
+        else if (urlParams.get('token')) {
+            token = urlParams.get('token');
+        }
+        // Finally check path-based token (for direct access)
+        else {
+            const pathParts = window.location.pathname.split('/');
+            if (pathParts.length >= 3 && pathParts[1] === 'feedback') {
+                token = pathParts[2];
+            }
         }
         
         console.log('Extracted token:', token);

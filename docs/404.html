@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .loading {
+            color: #667eea;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="loading">🔄 Redirecting to feedback form...</div>
+        <div class="spinner"></div>
+        <p style="color: #666; margin-top: 20px;">Please wait while we redirect you to the feedback form.</p>
+    </div>
+
+    <script>
+        (function() {
+            // Get the current path
+            const path = window.location.pathname;
+            console.log('404 page - Current path:', path);
+            
+            // Check if this is a feedback URL
+            if (path.startsWith('/hotel-gamification-app/feedback/')) {
+                // Extract the token from the URL
+                const pathParts = path.split('/');
+                const token = pathParts[pathParts.length - 1];
+                
+                console.log('404 page - Extracted token:', token);
+                
+                if (token && token !== 'feedback') {
+                    // Redirect to feedback.html with the token in the URL path
+                    const newUrl = `/hotel-gamification-app/feedback.html?redirect_token=${token}`;
+                    console.log('404 page - Redirecting to:', newUrl);
+                    window.location.replace(newUrl);
+                    return;
+                }
+            }
+            
+            // If not a feedback URL, redirect to home page
+            console.log('404 page - Redirecting to home');
+            window.location.replace('/hotel-gamification-app/');
+        })();
+    </script>
+</body>
+</html>
